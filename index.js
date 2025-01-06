@@ -32,7 +32,7 @@ app.get('/download-pdf', async (req, res) => {
             path.join(__dirname, 'templates', 'template1.ejs'), 
             data
         );
-        
+
         const browser = await puppeteer.launch({
             headless: 'new',
             args: ['--no-sandbox', '--disable-setuid-sandbox']
@@ -48,7 +48,6 @@ app.get('/download-pdf', async (req, res) => {
         const pdf = await page.pdf({
             format: 'A4',
             printBackground: true,
-           
             preferCSSPageSize: true
         });
 
