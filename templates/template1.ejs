@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>First Template</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
+  
+</head>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+   overflow-y: sc;
+}
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-y: scroll; 
+}
+.a4-page{
+    width: 210mm;
+    height: 297mm;
+}
+
+#first-page {
+    width: 210mm;
+    height: 297mm;
+    background-position: center;
+    background-size: cover;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                      url('https://i.pinimg.com/736x/65/43/47/65434715828cbdd77a873b05bf2ab0fb.jpg');
+}
+
+.header-part {
+    width: 100%;
+    background: linear-gradient(to left, rgba(0, 0, 0, 0) 0%, rgba(247, 245, 245, 0.486) 100%);
+    padding-block: 10px;
+    padding-inline: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-part h1{
+    color: white;
+    width: fit-content;
+}
+.package-intro{
+    padding: 40px;
+    width: 70%;
+}
+.regionname{
+    font-family: "Poppins", serif;
+font-size: 18px;
+font-weight: 300;
+line-height: 35px;
+letter-spacing: 0.17em;
+text-align: left;
+text-underline-position: from-font;
+text-decoration-skip-ink: none;
+color: white;
+}
+
+.packagename{
+    font-family: "Poppins", serif;
+    font-size: 51px;
+    line-height: 61px;
+    font-weight: 700;
+    color: white;
+    text-wrap: pretty;
+    margin-top: 10px;
+}
+
+.duration p {
+    font-family: Poppins;
+font-size: 16px;
+font-weight: 700;
+text-align: center;
+color: white;
+}
+
+.duration {
+    margin-top: 10px;
+    padding-inline: 20px;
+    padding-block: 15px;
+    border-radius: 20px;
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+    background-color: rgba(0, 0, 0, 0.07);
+    backdrop-filter: blur(7.4px);
+}
+
+.package-desc{
+    font-family: Poppins;
+font-size: 16px;
+font-weight: 400;
+text-align: left;
+    color: white;
+    margin-top: 10rem;
+}
+
+.white-card{
+    width: 100%;
+    padding-left:10px;
+    padding-right:30px;
+    padding-block: 10px;
+    background-color: white;
+    color:#5C5B5B;
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.inner-white-card{
+    width: 97%;
+    padding-left:10px;
+    padding-right:30px;
+    padding-block: 10px;
+    background-color: white;
+    color:#5C5B5B;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.leftie{
+    padding: 10px;
+    padding-right: 20px;
+    border-right : 1px solid #5C5B5B;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+}
+
+.rightie{
+    padding: 10px;
+    padding-left: 10px;
+}
+
+.price-from-text{
+    font-family: Inter;
+font-size: 14px;
+font-weight: 400;
+color: black !important;
+}
+.leftie span{
+    font-family: Inter;
+font-size: 10px;
+font-weight: 400;
+margin-bottom: 7px;
+
+}
+.priceu{
+font-family: Inter;
+font-size: 24px;
+font-weight: 800;
+color: #5C5B5B;
+margin-top: 5px;
+}
+
+.travel-text{
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+    color: black !important;
+}
+
+.travel-date{
+    font-family: Inter;
+font-size: 20px;
+font-weight: 800;
+}
+
+.inclusions-icons{
+    font-family: Open Sans;
+font-size: 14px;
+font-weight: 700;
+color: #ffffff80;
+margin-top: 2rem;
+}
+
+.golu{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    color: #333;
+    border-radius: 50%;
+    width: fit-content;
+    padding: 10px;
+    font-size: 20px;
+    font-weight: 100;
+}
+.tat{
+    color: rgba(240, 248, 255, 0.747);
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.destinations-bar{
+    margin-right: 1rem;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 30px;
+    height: fit-content;
+    border-right: 1px dotted white;
+}
+
+.dest{
+    color: white;
+    transform: rotate(-90deg);
+    height: 180px;
+    text-wrap: wrap;
+    text-wrap: wrap;
+    width: 103px;
+    position: relative;
+}
+
+
+    .dest p {
+        max-width: 150px; 
+        word-wrap: break-word; 
+        white-space: normal; 
+    }
+
+    .dot {
+        position: absolute;
+        height: 15px;
+        width: 15px;
+        background-color: #ffffff;
+        border-radius: 50%;
+        display: inline-block;
+        bottom: 32px;
+      }
+
+      .dot1 {
+        left: 126px;
+        position: absolute;
+        height: 15px;
+        width: 15px;
+        background-color: #ffffff;
+        border-radius: 50%;
+        display: inline-block;
+      }
+
+      .hero-section {
+        position: relative;
+        height: 400px;
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                          url('https://img.freepik.com/premium-photo/wild-monkey-monkey-forest-bali-indonesia_236845-631.jpg');
+        background-position: center;
+        background-size: cover;
+        overflow: hidden;
+    }
+    
+
+.hero-section h1{
+    font-family: Poppins;
+font-size: 122px;
+font-weight: 700;
+line-height: 89px;
+text-align: left;
+text-underline-position: from-font;
+text-decoration-skip-ink: none;
+color: rgb(255, 255, 255);
+}
+
+.badmas{
+    position: absolute;
+    top: 15.4rem;
+    left: 10%;
+}
+
+.boxi{
+    width: 134px;
+    height: 61px;
+    border-right: 1px dotted white;
+}
+
+.upper-half{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.lower-half{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.laft{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 70%;
+}
+
+.laft div {
+    border-right: 1px solid #A5A5A5;
+    border-bottom: 1px solid #A5A5A5;
+
+}
+
+.firstboy{
+    width: 30%;
+    padding-block: 20px;
+    padding-inline: 10px;
+}
+
+
+
+.secondboy{
+    width: 40%;
+    padding-block: 20px;
+    padding-inline: 10px;
+
+}
+
+.thirdboy{
+    width: 40%;
+    padding-block: 20px;
+    padding-inline: 10px;
+
+}
+
+.lower-half div{
+    border-bottom:0px ;
+}
+
+.firstboy i {
+    color:#6563FF;
+    font-size: 16px;
+
+}
+
+.whyperfect{
+    font-family: Poppins;
+font-size: 22px;
+font-weight: 600;
+line-height: 89px;
+letter-spacing: -0.02em;
+
+}
+
+.youenjoy{
+    font-family: Poppins;
+font-size: 22px;
+font-weight: 600;
+line-height: 89px;
+letter-spacing: -0.02em;
+}
+
+.enjoy-card{
+    background-color: #DEE5FA;
+    color: #7E95DA;
+    padding-inline: 25px;
+    padding-block: 10px;
+    border-radius: 20px;
+    width: fit-content;
+    font-family: "Open Sans", sans-serif;
+font-size: 10px;
+font-weight: 700;
+}
+
+#whyperfecttext{    
+color: #5E5E5E;
+font-family: Open Sans;
+font-size: 17px;
+font-weight: 400;
+line-height: 20px;
+}
+
+.secondboy h1{
+    font-family: Poppins;
+font-size: 20px;
+font-weight: 900;
+line-height: 10px;
+margin-bottom: 10px;
+}
+
+.tete{
+    font-family: Poppins;
+font-size: 18px;
+font-weight: 600;
+display: flex;
+justify-content: flex-start;
+align-items: center;
+}
+
+.tete i{
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.heading-page3{
+    font-family: Poppins;
+font-size: 60px;
+font-weight: 700;
+line-height: 89px;
+text-align: left;
+margin-left:48px;
+margin-top: 20px;
+}
+</style>
+
+<style>
+    .day-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); 
+  grid-template-rows: repeat(3, auto); 
+  gap: 10px 15px; 
+}
+
+.day-item {
+  padding: 20px;
+  font-size: 16px;
+}
+
+</style>
+<body>
+    <div class="a4-page" id="first-page">
+           <section class="header-part">
+               <div style="display: flex; justify-content: center; align-items: center; gap: 20px;"> 
+                
+                <img id="company-logo"  src="https://www.cultureholidays.com/Content/logo-black.png" alt="" width="100px">
+                <h1>Company Name</h1>
+
+               </div> 
+
+                <div style="display: flex; justify-content: center; flex-direction: column;">
+                    <p style="text-decoration: none; color: white;">+91 7042097122</p>
+
+                  <a style="text-decoration: none; color: white;" href="tyagiprateek6969@gmail.com"> tyagiprateek6969@gmail.com</a>
+                </div>
+
+           </section>
+
+          <section style="display: flex; align-items: flex-end; justify-content: space-between;">
+            <div class="package-intro">
+                <p class="regionname">
+                    Explore Thailand
+                </p>
+
+                <p class="packagename">
+                    Fascinating Thailand Trip
+                </p>
+
+                <div class="duration">
+                    <p>
+                       10 Nights - 11 Days
+                    </p>
+                </div>     
+                
+                
+                <div class="package-desc">
+                    Set out on a trip of a lifetime to Bali, a place where culture, adventure, and peace all converge in a captivating union.Rejuvenate your mind, body, and soul with a soul-nourishing Bali Spa experience and indulge in the ultimate in relaxation.
+                </div>
+
+                <div class="white-card">
+                    <div class="inner-white-card">
+
+                        <div class="leftie">
+                          <div>
+                            <p class="price-from-text">Price from</p>
+                            <p class="priceu">$ 900</p>
+                          </div>
+                          <span>
+                            Per Person
+                          </span>
+                        </div>
+
+                        <div class="rightie">
+                            <p class="trave-text">Travel on</p>
+                           <p class="travel-date"> 5th May' 2024</p>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+                <div class="inclusions-icons">
+                    <p>Trip Inclusions :</p>
+
+                    <div style="display: flex; align-items: center; gap: 30px;">
+                        <div class="tat" >
+                            <i class="ri-hotel-line golu"></i>
+                            <p>Hotel</p>
+                        </div>
+
+                        <div  class="tat" > 
+                            <i class="ri-camera-line golu"></i>
+                            <p>Sight Seeing</p>
+                        </div>
+
+                        <div  class="tat" >
+                            <i class="ri-restaurant-2-line golu"></i>
+                            <p>Meals</p>
+                        </div>
+
+                        <div  class="tat" >
+                            <i class="ri-car-line golu"></i>
+                            <p>Tranfers</p>
+                        </div>
+                    </div>
+                </div>
+
+
+           </div>
+
+       
+           <div class="destinations-bar">
+            
+                <div class="dest">
+                    <p class="day-text">DAY - 1</p>
+                    <p>Nairobi</p>
+
+                    <span class="dot"></span>
+                </div>
+
+                <div class="dest">
+                    <p class="day-text">DAY - 2</p>
+                    <p>Aberdare Sanctuary</p>
+
+                    <span class="dot"></span>
+                </div>
+                <div class="dest">
+                    <p class="day-text">DAY - 3</p>
+                    <p>Aberdare Sanctuary</p>
+
+                    <span class="dot"></span>
+                </div>
+                <div class="dest">
+                    <p class="day-text">DAY - 4</p>
+                    <p>Masai Mara National Reserve</p>
+
+                    <span class="dot"></span>
+                </div>
+                <p style="color: white;">
+                    AND MORE....
+                  </p>
+
+           </div>
+          </section>
+
+    </div>
+
+
+    <div class="a4-page" id="second-page">
+        <section class="header-part">
+            <div style="display: flex; justify-content: center; align-items: center; gap: 20px;"> 
+             
+             <img id="company-logo"  src="https://www.cultureholidays.com/Content/logo-black.png" alt="" width="100px">
+             <h1 style="color: rgb(56, 55, 55);;">Company Name</h1>
+
+            </div> 
+
+             <div style="display: flex; justify-content: center; flex-direction: column;">
+                 <p style="text-decoration: none; color: rgb(56, 55, 55);">+91 7042097122</p>
+
+               <a style="text-decoration: none; color: rgb(56, 55, 55);" href="tyagiprateek6969@gmail.com"> tyagiprateek6969@gmail.com</a>
+             </div>
+
+        </section>
+
+
+        <section class="hero-section">
+
+            <div class="overlay" style="position: relative; color: white; left: 80%; top: 10%;"  >
+                <div class="start-dates boxi" style="display: flex; justify-content: flex-end; align-items: center; padding: 20px;">
+                    April 12, 25
+                    <span class="dot1"></span>
+                </div>
+
+                <div class="end-dates boxi" style="display: flex; justify-content: flex-end; align-items: center; padding: 20px;">
+                    April 18, 25
+                    <span class="dot1"></span>
+                </div>
+            </div>
+
+          <div class="badmas">
+            <h1 class="upar">Trip</h1>
+            <h1 class="neeche">Overview</h1>
+          </div>
+        </section>
+        
+
+        <section>
+
+        </section>
+
+        <section style="display: flex; flex-direction: row-reverse; padding: 30px;">
+        <div style="width: 30%; padding: 10px;">
+           <p class="tete">
+            <i class="ri-restaurant-2-line"></i> Group Size
+           </p>
+            
+            <p style="margin-top: 10px;">
+                Small to medium group tours for guided excursions
+Independent travel options available for free exploration days
+            </p>
+        </div>    
+
+        <div class="laft">
+            <section class="upper-half">
+                <div class="firstboy">
+                    <h1 style="    font-family: Poppins;
+                    font-size: 20px;
+                    font-weight: 900;">05</h1>
+                    
+                    <span>DAYS</span>
+                </div>
+    
+                <div class="secondboy">
+                    <h1>3 Cities</h1>
+                    <br>
+                    <span>Bali, Kuta, Ubud</span>
+                </div>
+    
+                <div class="thirdboy">
+                   <p class="tete">
+                    <i class="ri-restaurant-line"></i> Meals
+                   </p>
+                    <br>
+                    <span>Breakfast, Lunch, Dinner</span>
+                </div>
+    
+    
+              </section>
+              <section class="lower-half">
+                <div class="firstboy">
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+
+                    <h3>
+                        5 Star Ratings
+                    </h3>
+                </div>
+
+                <div class="secondboy">
+                  <h1>2 Stays</h1>
+
+                  <p>
+                    Sheraton Hotel, Dubai | 
+                    Holidays Inn 
+                    <br>
+                    Hayatt Resort , Bali
+                  </p>
+                </div>
+
+                <div class="thirdboy">
+                   <p class="tete">
+                    <i class="ri-car-line"></i> Transfer
+                   </p>
+                    <p>
+                        Convinient Shared Transfer in cozy AC coaches or car.
+                    </p>
+                </div>
+              </section>
+        </div>
+        </section>
+
+
+        <section style="display: flex; justify-content: space-between; align-items: flex-start; padding: 30px; gap: 60px;">
+            <div style="width: 50%;">
+                    <h1 class="whyperfect">
+                        Why is this trip perfect for you
+                    </h1>
+
+                    <div id="whyperfecttext">
+                        
+Experience Spain's rich culture and history
+Explore top European party destinations (Ibiza)
+Discover Mediterranean beaches and beautiful landscapes
+Savor diverse cuisine, vibrant nightlife, and scenic tours
+Enjoy UNESCO World Heritage sites and famous landmarks
+                    </div>  
+            </div>
+
+            <div style="width: 50%;">
+                    <h1 class="youenjoy">
+                        You’ll enjoy this trip if you are
+                    </h1>
+
+
+                        <section style="display: flex; flex-wrap: wrap; gap: 10px;">
+                            
+                    <div class="enjoy-card">
+                        ENJOY REASON 1
+                </div>
+                <div class="enjoy-card">
+                    ENJOY REASON 1
+            </div>
+            <div class="enjoy-card">
+                ENJOY REASON 1
+        </div>
+        <div class="enjoy-card">
+            ENJOY REASON 1
+    </div>
+    <div class="enjoy-card">
+        ENJOY REASON 1
+</div>
+                        </section>
+
+            </div>
+        </section>
+    </div>
+
+    <div class="a4-page">
+        <section class="header-part">
+            <div style="display: flex; justify-content: center; align-items: center; gap: 20px;"> 
+             
+             <img id="company-logo"  src="https://www.cultureholidays.com/Content/logo-black.png" alt="" width="100px">
+             <h1 style="color: rgb(56, 55, 55);;">Company Name</h1>
+
+            </div> 
+
+             <div style="display: flex; justify-content: center; flex-direction: column;">
+                 <p style="text-decoration: none; color: rgb(56, 55, 55);">+91 7042097122</p>
+
+               <a style="text-decoration: none; color: rgb(56, 55, 55);" href="tyagiprateek6969@gmail.com"> tyagiprateek6969@gmail.com</a>
+             </div>
+
+        </section>
+
+        <h1 class="heading-page3">
+            Day Wise Schedule
+        </h1>
+        <div class="day-container" style="padding: 50px; height: fit-content;">
+            <div class="day-item">
+                <h3>
+                    Day 1 - Bali
+                </h3>
+
+                <p style="color:#676767; font-size: 14px; padding-bottom: 5px; border-bottom:  1px solid #D4D4D4; padding-top: 10px;">
+                    The Anvaya Beach Resort or Similar   
+                </p>
+                <section style="font-size: 12px; color:#999999; margin-top: 20px;">
+                    Set out on a trip of a lifetime to Bali,
+                    a place where culture, adventure, and peace all
+                    Rejuvenate your mind, body, and soul with
+                    Bali Spa experience and indulge in the ultimate in relaxation.
+                </section>
+            </div>
+            <div class="day-item">
+                <h3>
+                    Day 1 - Bali
+                </h3>
+
+                <p style="color:#676767; font-size: 14px; padding-bottom: 5px; border-bottom:  1px solid #D4D4D4; padding-top: 10px;">
+                    The Anvaya Beach Resort or Similar   
+                </p>
+                <section style="font-size: 12px; color:#999999; margin-top: 20px;">
+                    Set out on a trip of a lifetime to Bali,
+                    a place where culture, adventure, and peace all
+                    Rejuvenate your mind, body, and soul with
+                    Bali Spa experience and indulge in the ultimate in relaxation.
+                </section>
+            </div><div class="day-item">
+                <h3>
+                    Day 1 - Bali
+                </h3>
+
+                <p style="color:#676767; font-size: 14px; padding-bottom: 5px; border-bottom:  1px solid #D4D4D4; padding-top: 10px;">
+                    The Anvaya Beach Resort or Similar   
+                </p>
+                <section style="font-size: 12px; color:#999999; margin-top: 20px;">
+                    Set out on a trip of a lifetime to Bali,
+                    a place where culture, adventure, and peace all
+                    Rejuvenate your mind, body, and soul with
+                    Bali Spa experience and indulge in the ultimate in relaxation.
+                </section>
+            </div><div class="day-item">
+                <h3>
+                    Day 1 - Bali
+                </h3>
+
+                <p style="color:#676767; font-size: 14px; padding-bottom: 5px; border-bottom:  1px solid #D4D4D4; padding-top: 10px;">
+                    The Anvaya Beach Resort or Similar   
+                </p>
+                <section style="font-size: 12px; color:#999999; margin-top: 20px;">
+                    Set out on a trip of a lifetime to Bali,
+                    a place where culture, adventure, and peace all
+                    Rejuvenate your mind, body, and soul with
+                    Bali Spa experience and indulge in the ultimate in relaxation.
+                </section>
+            </div><div class="day-item">
+                <h3>
+                    Day 1 - Bali
+                </h3>
+
+                <p style="color:#676767; font-size: 14px; padding-bottom: 5px; border-bottom:  1px solid #D4D4D4; padding-top: 10px;">
+                    The Anvaya Beach Resort or Similar   
+                </p>
+                <section style="font-size: 12px; color:#999999; margin-top: 20px;">
+                    Set out on a trip of a lifetime to Bali,
+                    a place where culture, adventure, and peace all
+                    Rejuvenate your mind, body, and soul with
+                    Bali Spa experience and indulge in the ultimate in relaxation.
+                </section>
+            </div><div class="day-item">
+                <h3>
+                    Day 1 - Bali
+                </h3>
+
+                <p style="color:#676767; font-size: 14px; padding-bottom: 5px; border-bottom:  1px solid #D4D4D4; padding-top: 10px;">
+                    The Anvaya Beach Resort or Similar   
+                </p>
+                <section style="font-size: 12px; color:#999999; margin-top: 20px;">
+                    Set out on a trip of a lifetime to Bali,
+                    a place where culture, adventure, and peace all
+                    Rejuvenate your mind, body, and soul with
+                    Bali Spa experience and indulge in the ultimate in relaxation.
+                </section>
+            </div>
+        </div>
+          
+        
+
+    </div>
+
+
+    <div class="a4-page">
+        <section class="header-part">
+            <div style="display: flex; justify-content: center; align-items: center; gap: 20px;"> 
+             
+             <img id="company-logo"  src="https://www.cultureholidays.com/Content/logo-black.png" alt="" width="100px">
+             <h1 style="color: rgb(56, 55, 55);;">Company Name</h1>
+
+            </div> 
+
+             <div style="display: flex; justify-content: center; flex-direction: column;">
+                 <p style="text-decoration: none; color: rgb(56, 55, 55);">+91 7042097122</p>
+
+               <a style="text-decoration: none; color: rgb(56, 55, 55);" href="tyagiprateek6969@gmail.com"> tyagiprateek6969@gmail.com</a>
+             </div>
+
+        </section>
+
+        <section style="height: 149px;">
+            
+        </section>
+    </div>
+</body>
+</html>
