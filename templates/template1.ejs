@@ -494,6 +494,60 @@
 font-size: 16px;
 font-weight: 500;
     }
+
+    .blop-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 20px;
+            position: relative;
+        }
+        .sqwiggle-line {
+            border-left: 3px solid #229ADE;
+            position: absolute;
+            height: 100%;
+            left: 42px;
+            top: 0;
+        }
+        .flooper-item {
+            width: 600px;
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        .boop-number {
+            width: 50px;
+            height: 50px;
+            background-color: #229ADE;
+            color: white;
+            font-weight: bold;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 20px;
+            flex-shrink: 0;
+            z-index: 1;
+        }
+        .text-blabble {
+            flex: 1;
+        }
+        .text-blabble h3 {
+            color: #229ADE;
+            margin: 0 0 10px;
+        }
+        .text-blabble p {
+            color: #666;
+            margin: 0;
+        }
+        .qr-blurp {
+            margin-top: 10px;
+        }
+        .qr-blurp img {
+            width: 100px;
+            height: 100px;
+        }
 </style>
 
 <body>
@@ -1459,6 +1513,72 @@ font-weight: 500;
                 </ul>
             </div>
         </section>
+    </div>
+
+    <div class="a4-page">
+        <section class="header-part">
+            <div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
+
+                <img id="company-logo" src="https://www.cultureholidays.com/Content/logo-black.png" alt=""
+                    width="100px">
+                <h1 style="color: rgb(56, 55, 55);;">Company Name</h1>
+
+            </div>
+
+            <div style="display: flex; justify-content: center; flex-direction: column;">
+                <p style="text-decoration: none; color: rgb(56, 55, 55);">+91 7042097122</p>
+
+                <a style="text-decoration: none; color: rgb(56, 55, 55);" href="tyagiprateek6969@gmail.com">
+                    tyagiprateek6969@gmail.com</a>
+            </div>
+
+        </section>
+
+        <section style=" margin-inline: 10px; height: 460px; background-image: url('../templates/assets/finalpage-top.png'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+            
+        </section>
+        
+        <div class="blop-container">
+            <div class="sqwiggle-line"></div>
+        
+            <div class="flooper-item">
+                <div class="boop-number">01</div>
+                <div class="text-blabble">
+                    <h3>Scan this QR Code</h3>
+                    <p>
+                        The Leela Ambience, Delhi / Radisson blu, Dwarka / Vivanta by Taj, Dwarka or similar + 
+                        Jaypee Palace / Trident or similar + Hilton / Shiv Vilas or similar
+                    </p>
+                    <div class="qr-blurp">
+                        <img src="image.png" alt="QR Code">
+                    </div>
+                </div>
+            </div>
+        
+            <div class="flooper-item">
+                <div class="boop-number">02</div>
+                <div class="text-blabble">
+                    <h3>Make a new booking</h3>
+                    <p>The Leela Ambience, Delhi / Radisson blu, Dwarka / Vivanta by</p>
+                </div>
+            </div>
+        
+            <div class="flooper-item">
+                <div class="boop-number">03</div>
+                <div class="text-blabble">
+                    <h3>Enter your Details</h3>
+                    <p>The Leela Ambience, Delhi / Radisson blu, Dwarka / Vivanta by</p>
+                </div>
+            </div>
+        
+            <div class="flooper-item">
+                <div class="boop-number">04</div>
+                <div class="text-blabble">
+                    <h3>Pay and confirm your Spot</h3>
+                    <p>The Leela Ambience, Delhi / Radisson blu, Dwarka / Vivanta by</p>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 

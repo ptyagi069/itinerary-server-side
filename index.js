@@ -21,6 +21,9 @@ app.get('/preview', async (req, res) => {
     }
 });
 
+
+async 
+
 app.get('/download-pdf', async (req, res) => {
     try {
         const data = {
