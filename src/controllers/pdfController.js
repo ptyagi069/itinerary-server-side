@@ -1,23 +1,24 @@
+const fs = require('fs'); 
 const packageService = require('../services/packageService');
 const pdfService = require('../services/pdfService');
 
 class PDFController {
     async previewPDF(req, res) {
         try {
-            const pkgid = req.body.pkgid; 
-            const userid = req.body.userid;
-            const date = req.body.date;
-            const packageData = await packageService.getPackageData(pkgid , userid , date);
-            
-            const templateData = {
-                title: '',
-                content: ''
-            };
-            
-            res.render('template1', templateData);
+            const { pkgid, userid, date } = req.body;
+            const packageData = await packageService.getPackageData(pkgid, userid, date);
+
+            fs.writeFileSync(
+                './debug-packageData.txt',
+                JSON.stringify(packageData, null, 4),
+                'utf-8'
+            );
+
+            console.log(packageData);
+            res.render('template1', packageData);
         } catch (error) {
-            // next(error);
             console.log(error);
+            // next(error); // Uncomment this if you have global error handling
         }
     }
 
@@ -26,8 +27,13 @@ class PDFController {
             const { pkgId } = req.params;
             const packageData = await packageService.getPackageData(pkgId);
             const pdf = await pdfService.generatePDF(packageData);
-            
 
+            // Write the JSON data to a text file for debugging
+            fs.writeFileSync(
+                './debug-packageData-download.txt',
+                JSON.stringify(packageData, null, 4),
+                'utf-8'
+            );
 
             res.setHeader('Content-Length', pdf.length);
             res.setHeader('Content-Type', 'application/pdf');
@@ -35,7 +41,7 @@ class PDFController {
             res.send(Buffer.from(pdf));
         } catch (error) {
             console.log(error);
-           // next(error);
+            // next(error); // Uncomment this if you have global error handling
         }
     }
 }

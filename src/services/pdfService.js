@@ -8,7 +8,7 @@ class PDFService {
             headless: 'new',
             args: ['--no-sandbox', '--disable-setuid-sandbox']
         });
-
+        
         try {
             const html = await ejs.renderFile(
                 path.join(__dirname, '../templates/template1.ejs'),

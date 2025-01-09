@@ -68,7 +68,8 @@ async function getHotelInfo(pkgid) {
                         starRating: hotel.HTL_STAR || '',
                         cityName: hotel.HTL_CITY_NAME || '',
                         imagePath: hotel.IMAGE_PATH || '',
-                        nights: nights || ''
+                        nights: nights || '',
+                        hotelhighlights : hotel.Hotelhighlights || ''
                     });
                 });
             } catch (e) {
@@ -112,7 +113,6 @@ async function generateQr(agentId, emailId, packageId, tourDate, amount, deposit
     });
     
     try {
-        console.log(params);
         const temp = await fetch(`${url}?${params.toString()}`, {
             method: 'POST',
             headers: {
@@ -169,10 +169,28 @@ async function getagencyprofiledetails(userid) {
             emailId: data['emailid'],
             companyLogo: data['companyLogo'],
             contact: data['contact'],
-            whatsappNumber: data['whatsappNumber']
+            whatsappNumber: data['whatsappNumber'],
+            company_Name : data['company_Name']
         };
     } catch (error) {
         throw new Error(`Failed to fetch agency profile details: ${error.message}`);
+    }
+}
+
+async function getpkgrates(pkgid , userid , tourdate){
+    try {
+        const apiurl = `${config.apiUrl}/Holidays/PacKageRate?PKG_ID=${pkgid}&AgentID=${userid}&tourdate=${tourdate}`;
+        const response = await fetch(apiurl);
+        const data = await response.json();
+        console.log(data);
+        return {
+            dbldclienT_PRICE : data[0]['dbldclienT_PRICE'],
+            singdclienT_PRICE : data[0]['singdclienT_PRICE'],
+            ratE_AVIAL_DATE_R : data[0]['ratE_AVIAL_DATE_R'],
+        }
+       
+    } catch (error) {
+        throw new Error(`Failed to fetch package data: ${error.message}`);
     }
 }
 
@@ -180,14 +198,17 @@ class PackageService {
     async getPackageData(pkgid, userid , tourdate) {
         try {
             const result = {};
+            result.pkgdate = tourdate;
             result.packageInfo = await getpkgInfo(pkgid);
             result.agencyProfile = await getagencyprofiledetails(userid);
             result.inclusionsExclusions = await getpkginclusionexclusions(pkgid);
             result.hoteldetails = await getHotelInfo(pkgid);
             result.itinerary = await getpkgitineray(pkgid, userid);
+            result.packagerates = await getpkgrates(pkgid , userid , tourdate);
             result.qr = await generateQr(userid, result.agencyProfile.emailId, pkgid, tourdate, result.packageInfo.depositamount, result.packageInfo.depositamount, '1.1.1.1');
-            console.log(result);
+           return result;
         } catch (error) {
+            
             throw new Error(`Failed to fetch complete package data: ${error.message}`);
         }
     }
