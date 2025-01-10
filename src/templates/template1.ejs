@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>First Template</title>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
-
 </head>
 
 <style>
@@ -537,6 +536,7 @@
     }
 </style>
 
+
 <body>
     <div class="a4-page" id="first-page">
         <section class="header-part">
@@ -909,7 +909,7 @@
         </section>
 
         <section
-            style=" margin-inline: 10px; height: 460px; background-image: url('../templates/assets/finalpage-top.png'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+            style=" margin-inline: 10px; height: 460px; background-image: url('finalpage-top.png'); background-size: cover; background-repeat: no-repeat; background-position: center;">
 
         </section>
 
@@ -1006,11 +1006,9 @@ const formattedEndDate = `${newDate.getDate()}th ${newDate.toLocaleDateString('e
 const getCityNames = (cityHighlightsStr) => {
     try {
         const cityHighlights = JSON.parse(cityHighlightsStr);
-        // Filter out "Departure" and get unique city names
         const cities = cityHighlights
             .map(item => item.City.trim())
             .filter(city => city !== "Departure")
-            // Remove duplicates
             .filter((city, index, self) => 
                 self.indexOf(city) === index
             );
@@ -1254,7 +1252,7 @@ function createItineraryPage(dayData) {
             </div>
         </section>
 
-        <section class="details" style="background-color: #F9F8F6; padding-inline: 50px; padding-block:20px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+        <section class="details" style="background-color: #F9F8F6; padding-inline: 30px; padding-block:20px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
             <div>
                 <strong>Walking Level:</strong> ${detailsData.WalkingPlace || 'N/A'}
             </div>
@@ -1266,7 +1264,7 @@ function createItineraryPage(dayData) {
             </div>
         </section>
 
-        <section class="description" style="padding-inline: 30px;  padding-block:10px; font-size:14px !important; color: black !important; background-color: #11111100;">
+        <section class="description" style="padding-inline: 30px;  padding-block:10px; font-size: 14px !important; color: black !important; background-color: #11111100;">
             ${dayData.description}
         </section>
     `;
@@ -1352,6 +1350,8 @@ displayItinerary(itinerary);
 
 function generateHotelsSection(hotels, isRedTheme = false) {
     const themeColor = isRedTheme ? '#BA6672' : '#005BFF';
+    const hotelimage = isRedTheme ? '/red-hotel-p.png' : '/OBJECTS.png';
+    const theme2color = isRedTheme ? 'rgb(240 202 208 / 47%)' : '';
     const hotelListHTML = hotels.map(hotel => `
         <section class="hotels-container" style="padding-inline: 20px; padding-top: 5px; margin-bottom: 20px;">
             <div class="hotel-outer-div" style="border-radius: 5px; border: 1px solid #E9E9E9; display: flex; justify-content:space-between; width: 100%;">
@@ -1397,28 +1397,19 @@ function generateHotelsSection(hotels, isRedTheme = false) {
     return `
     <div class="a4-page">
         <section class="header-part">
-            <div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
-                <img id="company-logo" src="https://www.cultureholidays.com/Content/logo-black.png" alt="" width="100px">
-                <h1 style="color: rgb(56, 55, 55);">Company Name</h1>
-            </div>
-            <div style="display: flex; justify-content: center; flex-direction: column;">
-                <p style="text-decoration: none; color: rgb(56, 55, 55);">+91 7042097122</p>
-                <a style="text-decoration: none; color: rgb(56, 55, 55);" href="mailto:tyagiprateek6969@gmail.com">
-                    tyagiprateek6969@gmail.com
-                </a>
-            </div>
+        ${commonheaderpart}
         </section>
 
-        <section style="background-color: rgba(230.14, 242.57, 255, 0.47); display: flex; justify-content: space-between; align-items: flex-end;">
+        <section style="background-color: ${theme2color}; display: flex; justify-content: space-between; align-items: flex-end;">
             <div style="padding: 50px;">
                 <h1 style="color: ${themeColor}; font-size: 20px; font-family: Open Sans; font-weight: 700; line-height: 20.48px;">
                     Stay Option ${hotels[0].starRating} Star
-                </h1>
+                </h1>   
                 <p class="hotels-briefing" style="color: #7F7F7F; font-size: 16px; font-family: Open Sans; font-weight: 400; line-height: 15.36px; margin-top: 20px;">
                     ${hotels.map(h => h.name).join(' + ')}
                 </p>
             </div>
-            <img style="margin-right: 40px;" width="150px" height="150px" src="src/templates/assets/OBJECTS.png" alt="">
+            <img style="margin-right: 40px;" width="150px" height="150px" src="${hotelimage}" alt="">
         </section>
 
         <section class="hotels-costing" style="padding-block: 20px; background: ${themeColor}; color: white; display: flex; justify-content: space-around; align-items: center; font-family: Arial, sans-serif;">

@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'templates'));
-app.use(express.static(path.join(__dirname, 'src'))); 
+app.use(express.static(path.resolve('./src/templates/assets'))); 
 app.use('/api', pdfRoutes);
 app.use(ErrorHandler.handleError);
 
