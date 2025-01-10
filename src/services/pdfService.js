@@ -10,31 +10,23 @@ class PDFService {
             const html = await ejs.renderFile(templatePath, {
                 data: packageData,
             });
-
-            browser = await puppeteer.launch();
+            const browser = await puppeteer.launch();
             const page = await browser.newPage();
             page.setDefaultNavigationTimeout(60000);
             page.setDefaultTimeout(60000);
-
-            page.on('console', (msg) => console.log('Page log:', msg.text()));
-
-            await page.setJavaScriptEnabled(true);
-
-            // Set content and wait longer for scripts
-            await page.setContent(html, {
-                waitUntil: ['networkidle0', 'load', 'domcontentloaded'],
-            });
-
+          
+            // Set content to the HTML file
+            await page.setContent(html, { waitUntil: 'networkidle0' });
+          
+            // Generate PDF from the HTML content
             const pdf = await page.pdf({
-                path: filename, // Corrected usage
-                printBackground: true, // Include graphics
-                preferCSSPageSize: true,
-                headerTemplate:
-                    '<span style="font-size:10px;">Generated on: {{date}}</span>',
-                footerTemplate:
-                    '<span style="font-size:10px;">Page {{pageNumber}} of {{totalPages}}</span>',
+            //   path: `itinerary.pdf`, 
+              printBackground: true, //Include graphics
+              preferCSSPageSize: true,
+              format : "A4"
             });
-
+          
+            await browser.close();
             return pdf;
         } catch (error) {
             console.error('PDF generation error:', error);
