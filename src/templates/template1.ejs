@@ -962,12 +962,6 @@
 </body>
 
 <script>
-    const jsonString =  "<%= data.pkgdate %>";
-    const pkgInfo = "<%= data.packageInfo %>";
-    const agentDetails = "<%= data.agencyProfile %>";
-    console.log()
-    console.log(pkgInfo); 
-    console.log(agentDetails);
 
 function parseHtmlList(htmlString) {
     return htmlString
@@ -978,16 +972,17 @@ function parseHtmlList(htmlString) {
 }
 
 const temp = document.getElementById('data-fromejscontroller').innerHTML;
-const data = JSON.parse(temp);
-console.log(data);
 // data to be rendered 
-const packageinformation = data.packageInfo;
-const itinerary = data.itinerary;
-const incexc = data.inclusionsExclusions;
-const hotels = data.hoteldetails;
+const pkgdate = "<%= data.pkgdate %>" 
+const packageinformation = <%- JSON.stringify(data.packageInfo) %>;
+const itinerary =  <%- JSON.stringify(data.itinerary) %> ; 
+const incexc = <%- JSON.stringify(data.inclusionsExclusions) %> ;
+const hotels = <%- JSON.stringify(data.hoteldetails) %>  ;
+const packagerates = <%- JSON.stringify(data.packagerates) %>  ;
+const inclusionsExclusions = <%- JSON.stringify(data.inclusionsExclusions) %> ;
+const qrcodedata = <%- JSON.stringify( data.qr) %> ;
 const fiveStarHotels = hotels.filter(hotel => hotel.starRating === "5");
 const fourStarHotels = hotels.filter(hotel => hotel.starRating === "4");
-const qrcodedata =  data.qr;
 console.log(qrcodedata);
 const qrImageElement = document.getElementById('qr-code-image');
 
