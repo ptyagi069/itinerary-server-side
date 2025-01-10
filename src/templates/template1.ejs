@@ -979,6 +979,7 @@ const itinerary =  <%- JSON.stringify(data.itinerary) %> ;
 const incexc = <%- JSON.stringify(data.inclusionsExclusions) %> ;
 const hotels = <%- JSON.stringify(data.hoteldetails) %>  ;
 const packagerates = <%- JSON.stringify(data.packagerates) %>  ;
+const agencyProfile = <%- JSON.stringify(data.agencyProfile) %>  ;
 const inclusionsExclusions = <%- JSON.stringify(data.inclusionsExclusions) %> ;
 const qrcodedata = <%- JSON.stringify( data.qr) %> ;
 const fiveStarHotels = hotels.filter(hotel => hotel.starRating === "5");
@@ -997,7 +998,7 @@ function chunkArray(array, size) {
 }
 //variables and declarations
 const pkgtotaldays = packageinformation.pkg_noofdays;
-const dateString = data.pkgdate;
+const dateString = pkgdate;
 const date  = new Date(dateString.split('/').reverse().join('-'));
 const formattedDate = `${date.getDate()}th ${date.toLocaleDateString('en-US', { month: 'short' })} ${date.getFullYear()}`;
 const newDate = new Date(date);
@@ -1059,19 +1060,19 @@ const travelerTypes = parseYoullLoveThis(packageinformation.youlllovethis);
 
 let commonheaderpart = `
             <div style="display: flex; justify-content: center; align-items: center; gap: 20px; color:black;">
-                <img class="agent-company-logo" src=" ${data.agencyProfile.companyLogo}" alt="" width="100px">
-                <h1 class="agent-kompanyName" style="color: black;">${data.agencyProfile.company_Name}</h1>
+                <img class="agent-company-logo" src=" ${agencyProfile.companyLogo}" alt="" width="100px">
+                <h1 class="agent-kompanyName" style="color: black;">${agencyProfile.company_Name}</h1>
             </div>
             <div style="display: flex; justify-content: center; flex-direction: column; ">
                 <p class="agent-phone-num" style="text-decoration: none; color: black;">
-                ${data.agencyProfile.contact}</p>
-                <a class="agent-email" style="text-decoration: none; color: black;" href="mailto:${data.agencyProfile.emailId}">
-                    ${data.agencyProfile.emailId}</a>
+                ${agencyProfile.contact}</p>
+                <a class="agent-email" style="text-decoration: none; color: black;" href="mailto:${agencyProfile.emailId}">
+                    ${agencyProfile.emailId}</a>
             </div>`;
 const headerparts = document.querySelectorAll('.header-part');
 
 headerparts.forEach((part, index) => {
-    const profile = data.agencyProfile;
+    const profile = agencyProfile;
     if (profile) {
         if(index === 0){
             part.innerHTML = `
@@ -1115,7 +1116,7 @@ document.getElementById('pkgdsc').textContent = packageinformation.description;
 document.getElementById('tour-date').textContent = formattedDate;
 document.getElementById('start-dates').textContent = formattedDate;
 document.getElementById('end-dates').textContent = formattedEndDate;
-document.getElementById('price-top').innerText = `$` +`${parseInt( data.packagerates['singdclienT_PRICE'])}`;
+document.getElementById('price-top').innerText = `$` +`${parseInt( packagerates['singdclienT_PRICE'])}`;
 document.getElementById('pkgtotaldays-1').textContent = pkgtotaldays;
 document.getElementById('citycount').textContent = ` No.of Cities : ${cityList.length}`;
 document.getElementById('hotelcount').textContent = ` Your Stays : ${hotelNames.length}`;
@@ -1427,11 +1428,11 @@ function generateHotelsSection(hotels, isRedTheme = false) {
             </div>
             <div style="text-align: left; border-right: 1px solid white; padding-right: 50px;">
                 <span style="font-size: 18px; font-weight: bold;">Single</span><br>
-                <span style="font-size: 24px; font-weight: bold;">${parseInt(data.packagerates.singdclienT_PRICE)}</span> <span style="font-size: 14px;">/per person</span>
+                <span style="font-size: 24px; font-weight: bold;">${parseInt(packagerates.singdclienT_PRICE)}</span> <span style="font-size: 14px;">/per person</span>
             </div>
             <div style="text-align: left;">
                 <span style="font-size: 18px; font-weight: bold;">Double</span><br>
-                <span style="font-size: 24px; font-weight: bold;">${parseInt(data.packagerates.dbldclienT_PRICE)}</span> <span style="font-size: 14px;">/per person</span>
+                <span style="font-size: 24px; font-weight: bold;">${parseInt(packagerates.dbldclienT_PRICE)}</span> <span style="font-size: 14px;">/per person</span>
             </div>
             <div style="text-align: center;">
                 <span style="font-size: 18px; font-weight: bold;">Room Type:</span><br>
