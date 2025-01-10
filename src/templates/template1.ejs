@@ -962,8 +962,12 @@
 </body>
 
 <script>
-     <%= data.pkgdate %>;
-
+    const jsonString =  "<%= data.pkgdate %>";
+    const pkgInfo = "<%= data.packageInfo %>";
+    const agentDetails = "<%= data.agencyProfile %>";
+    console.log()
+    console.log(pkgInfo); 
+    console.log(agentDetails);
 
 function parseHtmlList(htmlString) {
     return htmlString
