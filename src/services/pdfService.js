@@ -3,14 +3,16 @@ const ejs = require('ejs');
 const path = require('path');
 
 class PDFService {
-    async generatePDF(data) {
+    async generatePDF(packageData) {
         let browser;
         try {
             const templatePath = path.join(__dirname, '../templates/template1.ejs');
-            const html = await ejs.renderFile(templatePath, data);
+            const html = await ejs.renderFile(templatePath,{
+                data: packageData
+            });
 
             browser = await puppeteer.launch({
-                headless: 'new',
+                headless: true,
                 args: ['--no-sandbox', '--disable-setuid-sandbox'],
                 defaultViewport: {
                     width: 1024,
@@ -30,18 +32,17 @@ class PDFService {
                 waitUntil: ['networkidle0', 'load', 'domcontentloaded']
             });
 
-            // Give more time for scripts to execute
-            await page.waitForTimeout(6000);
 
             // Debug: Save screenshot
             await page.screenshot({
                 path: 'debug-screenshot.png',
                 fullPage: true
             });
-
+            
             const finalHtml = await page.content();
+            
             require('fs').writeFileSync('debug-final.html', finalHtml);
-
+          
             const pdf = await page.pdf({
                 format: 'A4',
                 printBackground: true,

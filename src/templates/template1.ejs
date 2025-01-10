@@ -972,7 +972,6 @@ function parseHtmlList(htmlString) {
 }
 
 const temp = document.getElementById('data-fromejscontroller').innerHTML;
-// data to be rendered 
 const pkgdate = "<%= data.pkgdate %>" 
 const packageinformation = <%- JSON.stringify(data.packageInfo) %>;
 const itinerary =  <%- JSON.stringify(data.itinerary) %> ; 
@@ -996,7 +995,7 @@ function chunkArray(array, size) {
     }
     return chunked;
 }
-//variables and declarations
+
 const pkgtotaldays = packageinformation.pkg_noofdays;
 const dateString = pkgdate;
 const date  = new Date(dateString.split('/').reverse().join('-'));
@@ -1419,7 +1418,7 @@ function generateHotelsSection(hotels, isRedTheme = false) {
                     ${hotels.map(h => h.name).join(' + ')}
                 </p>
             </div>
-            <img style="margin-right: 40px;" width="150px" height="150px" src="../templates/assets/OBJECTS.png" alt="">
+            <img style="margin-right: 40px;" width="150px" height="150px" src="src/templates/assets/OBJECTS.png" alt="">
         </section>
 
         <section class="hotels-costing" style="padding-block: 20px; background: ${themeColor}; color: white; display: flex; justify-content: space-around; align-items: center; font-family: Arial, sans-serif;">
