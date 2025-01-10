@@ -207,7 +207,6 @@ class PackageService {
             result.qr = await generateQr(userid, result.agencyProfile.emailId, pkgid, tourdate, result.packageInfo.depositamount, result.packageInfo.depositamount, '1.1.1.1');
            return result;
         } catch (error) {
-            
             throw new Error(`Failed to fetch complete package data: ${error.message}`);
         }
     }

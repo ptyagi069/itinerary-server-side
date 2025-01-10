@@ -7,6 +7,7 @@ class PDFController {
             const { pkgid } = req.params;
             const { userid, date } = req.query; 
             const packageData = await packageService.getPackageData(pkgid, userid, date);
+            require('fs').writeFileSync('./data-dummy.txt', JSON.stringify({ data: packageData }));
             res.render('template1', {
                 data: packageData
             });
@@ -22,11 +23,11 @@ class PDFController {
             const { userid, date } = req.query;
             const packageData = await packageService.getPackageData(pkgid, userid, date);
             
-            const pdf = await pdfService.generatePDF(packageData);
-            
+            const pdf = await pdfService.generatePDF(packageData, pkgid);
+            const packagename = packageData.packageInfo.packageName;
             res.set({
                 'Content-Type': 'application/pdf',
-                'Content-Disposition': 'inline; filename="generated.pdf"', // Use "attachment" to force download
+                'Content-Disposition': `inline; filename= "${packagename}.pdf"`, 
             });
             
             res.end(pdf);
