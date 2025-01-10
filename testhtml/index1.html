@@ -31,8 +31,6 @@
     .a4-page {
         width: 210mm;
         height: 297mm;
-        page-break-after: always;
-        border: 1px solid black;
     }
 
     .header-part {
@@ -99,15 +97,15 @@
 
     .white-card {
         width: 100%;
-        padding-left: 10px;
-        padding-right: 30px;
-        padding-block: 10px;
-        background-color: white;
-        color: #5C5B5B;
-        margin-top: 2rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-block: 9px;
+    background-color: white;
+    color: #5C5B5B;
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     }
 
     .inner-white-card {
@@ -545,23 +543,29 @@
            
         </section>
         
-        <section style="display: flex; align-items: flex-end; justify-content: space-between;">
-            <div class="package-intro">
+        <section style="display: flex; align-items: flex-end; justify-content: space-between; height: 90%;">
+            <div class="package-intro" style="    height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;">
+               
+              <div>
                 <p class="regionname">
                     Explore 
                 </p>
-
-                <p id="packagename">
-                   
-                </p>
-
-                <div class="duration">
-                    <p id="dura-tomo">
-                        10 Nights - 11 Days
+                    <p id="packagename">
+                       
                     </p>
-                </div>
+                    <div class="duration">
+                        <p id="dura-tomo">
+                            10 Nights - 11 Days
+                        </p>
+                    </div>
+              </div>
 
-                <div class="package-desc" id="pkgdsc">
+               
+
+                <div class="package-desc" id="pkgdsc" style="display: none;">
                    
                 </div>
 
@@ -588,7 +592,7 @@
                 </div>
 
 
-                <div class="inclusions-icons">
+                <div class="inclusions-icons" style="display: none;">
                     <p>Trip Inclusions :</p>
 
                     <div style="display: flex; align-items: center; gap: 30px;">
@@ -1337,6 +1341,11 @@ function createDestinationsBar(itinerary) {
     return destBar;
 }
 
+/**
+ * Initializes the destination bar in the given container
+ * @param {Array} itinerary - The destinations to be displayed
+ * @param {String} containerId - The id of the container to render the destinations bar
+ */
 function initDestinationsBar(itinerary, containerId) {
     const container = document.getElementById(containerId);
     if (container) {

@@ -97,15 +97,15 @@
 
     .white-card {
         width: 100%;
-    padding-left: 0px;
-    padding-right: 0px;
-    padding-block: 9px;
-    background-color: white;
-    color: #5C5B5B;
-    margin-top: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+        padding-left: 10px;
+        padding-right: 30px;
+        padding-block: 10px;
+        background-color: white;
+        color: #5C5B5B;
+        margin-top: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .inner-white-card {
@@ -538,6 +538,7 @@
 </style>
 
 <body>
+
     <div class="a4-page" id="first-page">
         <section class="header-part">
            
@@ -558,7 +559,7 @@
                     </p>
                     <div class="duration">
                         <p id="dura-tomo">
-                            10 Nights - 11 Days
+                           
                         </p>
                     </div>
               </div>
@@ -955,14 +956,12 @@
             </div>
         </div>
     </div>
-    <span id="data-fromejscontroller">
-        <%- JSON.parse(data) %>
-    </span>
-
+    
 </body>
 
 <script>
 
+document.addEventListener('DOMContentLoaded', () => {
 function parseHtmlList(htmlString) {
     return htmlString
         .replace(/<\/?[^>]+(>|$)/g, '')
@@ -971,16 +970,22 @@ function parseHtmlList(htmlString) {
         .map(item => item.trim());
 }
 
-const temp = document.getElementById('data-fromejscontroller').innerHTML;
-const data = JSON.parse(temp);
-console.log(data);
-// data to be rendered 
-const packageinformation = data.packageInfo;
-const itinerary = data.itinerary;
-const incexc = data.inclusionsExclusions;
-const hotels = data.hoteldetails;
+
+const packageinformation = `[object Object]`;
+const itinerary = `[object Object],[object Object],[object Object],[object Object],[object Object]`;
+const incexc = `[object Object],[object Object]`;
+const hotels = `[object Object]`;
+console.log(hotels);
+console.log(incexc);
 const fiveStarHotels = hotels.filter(hotel => hotel.starRating === "5");
 const fourStarHotels = hotels.filter(hotel => hotel.starRating === "4");
+// data to be rendered 
+// const packageinformation = data.packageInfo;
+// const itinerary = data.itinerary;
+// const incexc = data.inclusionsExclusions;
+// const hotels = data.hoteldetails;
+// const fiveStarHotels = hotels.filter(hotel => hotel.starRating === "5");
+// const fourStarHotels = hotels.filter(hotel => hotel.starRating === "4");
 const qrcodedata =  data.qr;
 console.log(qrcodedata);
 const qrImageElement = document.getElementById('qr-code-image');
@@ -1451,6 +1456,10 @@ document.getElementById('dynamic-hotel-list-5stars').innerHTML =
 const fourStarPages = chunkArray(fourStarHotels, 3);
 document.getElementById('dynamic-hotel-list-4stars').innerHTML = 
     fourStarPages.map(pageHotels => generateHotelsSection(pageHotels, true)).join('');
+
+    const event = new Event('yourScriptDoneEvent');
+            window.dispatchEvent(event);
+        });
 </script>
 
 </html>
