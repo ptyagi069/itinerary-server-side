@@ -3,49 +3,36 @@ const ejs = require('ejs');
 const path = require('path');
 
 class PDFService {
-    async generatePDF(packageData) {
+    async generatePDF(packageData, filename) {
         let browser;
         try {
             const templatePath = path.join(__dirname, '../templates/template1.ejs');
-            const html = await ejs.renderFile(templatePath,{
-                data: packageData
+            const html = await ejs.renderFile(templatePath, {
+                data: packageData,
             });
-            
-            browser = await puppeteer.launch({
-                headless: true,
-                args: ['--no-sandbox', '--disable-setuid-sandbox'],
-                defaultViewport: {
-                    width: 1024,
-                    height: 768
-                }
-            });
-            
+
+            browser = await puppeteer.launch();
             const page = await browser.newPage();
-            page.on('console', msg => console.log('Page log:', msg.text()));
-            
+            page.setDefaultNavigationTimeout(60000);
+            page.setDefaultTimeout(60000);
+
+            page.on('console', (msg) => console.log('Page log:', msg.text()));
+
             await page.setJavaScriptEnabled(true);
-            
+
             // Set content and wait longer for scripts
             await page.setContent(html, {
-                waitUntil: ['networkidle0', 'load', 'domcontentloaded']
+                waitUntil: ['networkidle0', 'load', 'domcontentloaded'],
             });
 
-
-            // Debug: Save screenshot
-            await page.screenshot({
-                path: 'debug-screenshot.png',
-                fullPage: true
-            });
-
-            const finalHtml = await page.content();
-            
-            require('fs').writeFileSync('debug-final.html', finalHtml);
-          
             const pdf = await page.pdf({
-                format: 'A4',
-                printBackground: true,
-               
-                preferCSSPageSize: true
+                path: filename, // Corrected usage
+                printBackground: true, // Include graphics
+                preferCSSPageSize: true,
+                headerTemplate:
+                    '<span style="font-size:10px;">Generated on: {{date}}</span>',
+                footerTemplate:
+                    '<span style="font-size:10px;">Page {{pageNumber}} of {{totalPages}}</span>',
             });
 
             return pdf;
