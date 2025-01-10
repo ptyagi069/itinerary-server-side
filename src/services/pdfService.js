@@ -10,7 +10,7 @@ class PDFService {
             const html = await ejs.renderFile(templatePath,{
                 data: packageData
             });
-
+            
             browser = await puppeteer.launch({
                 headless: true,
                 args: ['--no-sandbox', '--disable-setuid-sandbox'],
@@ -21,8 +21,6 @@ class PDFService {
             });
             
             const page = await browser.newPage();
-            
-            // For debugging - log console messages from the page
             page.on('console', msg => console.log('Page log:', msg.text()));
             
             await page.setJavaScriptEnabled(true);
@@ -38,7 +36,7 @@ class PDFService {
                 path: 'debug-screenshot.png',
                 fullPage: true
             });
-            
+
             const finalHtml = await page.content();
             
             require('fs').writeFileSync('debug-final.html', finalHtml);
@@ -46,12 +44,7 @@ class PDFService {
             const pdf = await page.pdf({
                 format: 'A4',
                 printBackground: true,
-                margin: {
-                    top: '20px',
-                    right: '20px',
-                    bottom: '20px',
-                    left: '20px'
-                },
+               
                 preferCSSPageSize: true
             });
 
