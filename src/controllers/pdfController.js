@@ -8,16 +8,17 @@ class PDFController {
             const { pkgid } = req.params;
             const { userid, date } = req.query; 
             const packageData = await packageService.getPackageData(pkgid, userid, date);
-            
-            const safePackageData = JSON.stringify(packageData)
-                .replace(/</g, '\\u003c')
-                .replace(/>/g, '\\u003e')
-                .replace(/&/g, '\\u0026')
-                .replace(/'/g, '\\u0027')
-                .replace(/"/g, '\\"');
-    
+
+            // const safePackageData = JSON.stringify(packageData)
+                // .replace(/</g, '\\u003c')
+                // .replace(/>/g, '\\u003e')
+                // .replace(/&/g, '\\u0026')
+                // .replace(/'/g, '\\u0027')
+                // .replace(/"/g, '\\"');
+
+                // fs.writeFileSync("package-data.txt", JSON.stringify(safePackageData));
             res.render('template1', {
-                data: safePackageData
+                data: packageData
             });
     
         } catch (error) {

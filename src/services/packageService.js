@@ -182,7 +182,6 @@ async function getpkgrates(pkgid , userid , tourdate){
         const apiurl = `${config.apiUrl}/Holidays/PacKageRate?PKG_ID=${pkgid}&AgentID=${userid}&tourdate=${tourdate}`;
         const response = await fetch(apiurl);
         const data = await response.json();
-        console.log(data);
         return {
             dbldclienT_PRICE : data[0]['dbldclienT_PRICE'],
             singdclienT_PRICE : data[0]['singdclienT_PRICE'],
