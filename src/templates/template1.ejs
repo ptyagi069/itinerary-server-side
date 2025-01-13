@@ -778,39 +778,7 @@
             Day Wise Schedule
         </h1>
         <div id="daywiseiti" class="day-container" style="padding: 50px; height: fit-content;">
-            <div class="day-item">
-                <h3>
-                    Day 1 - Bali
-                </h3>
-
-                <p
-                    style="color:#676767; font-size: 14px; padding-bottom: 5px; border-bottom:  1px solid #D4D4D4; padding-top: 10px;">
-                    The Anvaya Beach Resort or Similar
-                </p>
-                <section style="font-size: 12px; color:#999999; margin-top: 20px;">
-                    Set out on a trip of a lifetime to Bali,
-                    a place where culture, adventure, and peace all
-                    Rejuvenate your mind, body, and soul with
-                    Bali Spa experience and indulge in the ultimate in relaxation.
-                </section>
-            </div>
-            <div class="day-item">
-                <h3>
-                    Day 1 - Bali
-                </h3>
-
-                <p
-                    style="color:#676767; font-size: 14px; padding-bottom: 5px; border-bottom:  1px solid #D4D4D4; padding-top: 10px;">
-                    The Anvaya Beach Resort or Similar
-                </p>
-                <section style="font-size: 12px; color:#999999; margin-top: 20px;">
-                    Set out on a trip of a lifetime to Bali,
-                    a place where culture, adventure, and peace all
-                    Rejuvenate your mind, body, and soul with
-                    Bali Spa experience and indulge in the ultimate in relaxation.
-                </section>
-            </div>
-     
+    
         </div>
 
 
@@ -898,8 +866,8 @@
                     <tr>
                         <td style="border: 1px solid #ddd; padding: 10px;">Mar 27, 2025</td>
                         <td style="border: 1px solid #ddd; padding: 10px;">Standard Room</td>
-                        <td style="border: 1px solid #ddd; padding: 10px; text-align: center;">$962</td>
-                        <td style="border: 1px solid #ddd; padding: 10px; text-align: center;">$1489</td>
+                        <td style="border: 1px solid #ddd; padding: 10px; text-align: center;" id="dbltblprice"></td>
+                        <td style="border: 1px solid #ddd; padding: 10px; text-align: center;" id="sgltblprice"></td>
                     </tr>
                 </tbody>
             </table>
@@ -964,6 +932,8 @@
 
 </body>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css" integrity="sha512-kJlvECunwXftkPwyvHbclArO8wszgBGisiLeuDFwNM8ws+wKIw0sv1os3ClWZOcrEB2eRXULYUsm8OVRGJKwGA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 <script>
 
 function parseHtmlList(htmlString) {
@@ -986,7 +956,6 @@ const inclusionsExclusions = <%- JSON.stringify(data.inclusionsExclusions) %> ;
 const qrcodedata = <%- JSON.stringify( data.qr) %> ;
 const fiveStarHotels = hotels.filter(hotel => hotel.starRating === "5");
 const fourStarHotels = hotels.filter(hotel => hotel.starRating === "4");
-console.log(qrcodedata);
 const qrImageElement = document.getElementById('qr-code-image');
 
 qrImageElement.src = qrcodedata.message;
@@ -999,7 +968,7 @@ function chunkArray(array, size) {
     return chunked;
 }
 const daywiseschedule = packageinformation.cityhighlights;
-console.log(daywiseschedule);
+
 const pkgtotaldays = packageinformation.pkg_noofdays;
 const dateString = pkgdate;
 const date  = new Date(dateString.split('/').reverse().join('-'));
@@ -1113,11 +1082,15 @@ document.getElementById('first-page').style = `width: 210mm;
           background-size: cover;
           background-repeat : no-repeat;
        `;
+       const singleprice = `$` +`${parseInt(packagerates['singdclienT_PRICE'])}`;
+       const doubleprice = `$` +`${parseInt(packagerates['dbldclienT_PRICE'])}`;
+       document.getElementById('dbltblprice').innerHTML = doubleprice;
+       document.getElementById('sgltblprice').innerHTML = singleprice;
 document.getElementById('pkgdsc').textContent = packageinformation.description;
 document.getElementById('tour-date').textContent = formattedDate;
 document.getElementById('start-dates').textContent = formattedDate;
 document.getElementById('end-dates').textContent = formattedEndDate;
-document.getElementById('price-top').innerText = `$` +`${parseInt( packagerates['singdclienT_PRICE'])}`;
+document.getElementById('price-top').innerText = singleprice;
 document.getElementById('pkgtotaldays-1').textContent = pkgtotaldays;
 document.getElementById('citycount').textContent = ` No.of Cities : ${cityList.length}`;
 document.getElementById('hotelcount').textContent = ` Your Stays : ${hotelNames.length}`;
@@ -1168,13 +1141,26 @@ const citiesSpan = document.getElementById('cities');
 citiesSpan.textContent = cityList.join(', ');
 document.getElementById('hotelss').textContent = hotelNames.join(', ');
 
-
-
 function renderDaySchedule(scheduleData) {
-    // Create the container
+    let data;
+    try {
+        data = typeof scheduleData === 'string' ? JSON.parse(scheduleData) : scheduleData;
+        
+        if (!Array.isArray(data)) {
+            throw new Error('Data is not an array');
+        }
+    } catch (error) {
+        console.error('Error processing schedule data:', error);
+        return document.createElement('div'); 
+    }
+
     const container = document.createElement('div');
     container.className = 'day-container';
-    container.style.cssText = 'padding: 50px; height: fit-content;';
+    container.style.cssText = `    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, auto);
+    gap: 10px 15px;
+    width: 180mm;`;
 
     // Function to parse duration and get day numbers
     function parseDuration(duration) {
@@ -1193,7 +1179,7 @@ function renderDaySchedule(scheduleData) {
     }
 
     // Process each schedule item
-    scheduleData.forEach(item => {
+    data.forEach(item => {
         const days = parseDuration(item.Duration);
         
         days.forEach(dayNum => {
@@ -1218,10 +1204,8 @@ function renderDaySchedule(scheduleData) {
 
     return container;
 }
-
 const scheduleContainer = renderDaySchedule(daywiseschedule);
 document.getElementById('daywiseiti').appendChild(scheduleContainer);
-
 
 function renderInclusionsExclusions(data) {
     // Find inclusions and exclusions from the data
@@ -1242,7 +1226,7 @@ function renderInclusionsExclusions(data) {
             <ul style="list-style: none; padding: 0;">
                 ${inclusionsList.map(item => `
                     <li style="color: #28A745; margin-bottom: 10px;">
-                        ✔️ <span style="margin-left: 10px;">${item}</span>
+                       <i class="ri-check-fill" style="color:green;"></i> <span style="margin-left: 10px;">${item}</span>
                     </li>
                 `).join('')}
             </ul>
@@ -1261,7 +1245,7 @@ function renderInclusionsExclusions(data) {
             <ul style="list-style: none; padding: 0;">
                 ${exclusionsList.map(item => `
                     <li style="color: #DC3545; margin-bottom: 10px;">
-                        ❌ <span style="margin-left: 10px;">${item}</span>
+                        <i class="ri-subtract-line" style="color:red;"></i> <span style="margin-left: 10px;">${item}</span>
                     </li>
                 `).join('')}
             </ul>
@@ -1448,97 +1432,106 @@ function generateHotelsSection(hotels, isRedTheme = false) {
     const themeColor = isRedTheme ? '#BA6672' : '#005BFF';
     const hotelimage = isRedTheme ? '/red-hotel-p.png' : '/OBJECTS.png';
     const theme2color = isRedTheme ? 'rgb(240 202 208 / 47%)' : '';
-    const hotelListHTML = hotels.map(hotel => `
-        <section class="hotels-container" style="padding-inline: 20px; padding-top: 5px; margin-bottom: 20px;">
-            <div class="hotel-outer-div" style="border-radius: 5px; border: 1px solid #E9E9E9; display: flex; justify-content:space-between; width: 100%;">
-                <div class="lefts" style="width: 30%; padding: 10px;">
-                    <img
-                        width="90%"
-                        height="200px"
-                        style="object-fit: cover; object-position: center; border-radius: 10px;"
-                        src="https://cms.tripoculture.com/${hotel.imagePath.replace('../', '')}"
-                        alt="${hotel.name}">
-                </div>
-                <div class="rights" style="width: 70%; padding-top: 10px; padding-right: 10px; padding-bottom: 10px;">
-                    <section style="display: flex; justify-content: space-between;">
-                        <div style="display: flex; justify-content: center; align-items:flex-start; flex-direction: column; font-size: 16px; border-bottom: 1px solid #E9E9E9; margin-bottom: 10px;">
-                            <p class="hotel-name">
-                                ${hotel.name}
-                            </p>
-                            <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
-                               
-                                <p class="hotel-stars" style="font-size: 12px;">
-                                    Star Rating: 
-                                    ${"⭐".repeat(parseInt(hotel.starRating))}
+
+    const hotelListHTML = hotels.map(hotel => {
+        const hotelHighlights = JSON.parse(hotel.hotelhighlights);
+        const limitedHighlights = hotelHighlights.slice(0, 5);
+        const highlightsHTML = limitedHighlights.map(highlight => `
+            <p>${highlight.KeyHighlights}</p>
+        `).join('');
+        return `
+            <section class="hotels-container" style="padding-inline: 20px; padding-top: 5px; margin-bottom: 20px;">
+                <div class="hotel-outer-div" style="border-radius: 5px; border: 1px solid #E9E9E9; display: flex; justify-content:space-between; width: 100%;">
+                    <div class="lefts" style="width: 30%; padding: 10px;">
+                        <img
+                            width="90%"
+                            height="200px"
+                            style="object-fit: cover; object-position: center; border-radius: 10px;"
+                            src="${hotel.imagePath.replace('../', '')}"
+                            alt="${hotel.name}">
+                    </div>
+                    <div class="rights" style="width: 70%; padding-top: 10px; padding-right: 10px; padding-bottom: 10px;">
+                        <section style="display: flex; justify-content: space-between;">
+                            <div style="display: flex; justify-content: center; align-items:flex-start; flex-direction: column; font-size: 16px; border-bottom: 1px solid #E9E9E9; margin-bottom: 10px;">
+                                <p class="hotel-name">
+                                    ${hotel.name}
+                                </p>
+                                <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+                                    <p class="hotel-stars" style="font-size: 12px;">
+                                        Star Rating:
+                                        ${"⭐".repeat(parseInt(hotel.starRating))}
+                                    </p>
+                                </div>
+                            </div>
+                            <div style="width: fit-content; display: flex; justify-content: flex-end; align-items: flex-end; gap: 10px; flex-direction: column;">
+                                <p class="current-hotel-duration" style="background-color: #3BE67F26; width: fit-content; padding-inline: 15px; padding-block: 7px; font-size: 17px; color: green; border-radius: 20px; border: 1px dotted green;">
+                                    ${hotel.cityName}
+                                </p>
+                                <p class="hotel-number-of-nights" style="color: green; font-weight: 600; font-size: 15px;">
+                                    ${hotel.nights} Nights
                                 </p>
                             </div>
-                        </div>
-                        <div style="width: fit-content; display: flex; justify-content: flex-end; align-items: flex-end; gap: 10px; flex-direction: column;">
-                            <p class="current-hotel-duration" style="background-color: #3BE67F26; width: fit-content; padding-inline: 15px; padding-block: 7px; font-size: 17px; color: green; border-radius: 20px; border: 1px dotted green;">
-                                ${hotel.cityName}
-                            </p>
-                            <p class="hotel-number-of-nights" style="color: green; font-weight: 600; font-size: 15px;">
-                                ${hotel.nights} Nights
-                            </p>
-                        </div>
-                    </section>
-                    <section class="hotel-room-details" style="font-size: 13px !important; color: #8F8F8F;">
-                        ${hotel.hotelhighlights || 'Complimentary Breakfast'}
-                    </section>
+                        </section>
+                        <section class="hotel-room-details" style="font-size: 13px !important; color: #8F8F8F;">
+                            ${highlightsHTML}
+                        </section>
+                    </div>
                 </div>
-            </div>
-        </section>
-    `).join('');
+            </section>
+        `;
+    }).join('');
 
     return `
-    <div class="a4-page">
-        <section class="header-part">
-        ${commonheaderpart}
-        </section>
+        <div class="a4-page">
+            <section class="header-part">
+                ${commonheaderpart}
+            </section>
 
-        <section style="background-color: ${theme2color}; display: flex; justify-content: space-between; align-items: flex-end;">
-            <div style="padding: 50px;">
-                <h1 style="color: ${themeColor}; font-size: 20px; font-family: Open Sans; font-weight: 700; line-height: 20.48px;">
-                    Stay Option ${hotels[0].starRating} Star
-                </h1>   
-                <p class="hotels-briefing" style="color: #7F7F7F; font-size: 16px; font-family: Open Sans; font-weight: 400; line-height: 15.36px; margin-top: 20px;">
-                    ${hotels.map(h => h.name).join(' + ')}
-                </p>
-            </div>
-            <img style="margin-right: 40px;" width="150px" height="150px" src="${hotelimage}" alt="">
-        </section>
+            <section style="background-color: ${theme2color}; display: flex; justify-content: space-between; align-items: flex-end;">
+                <div style="padding: 50px;">
+                    <h1 style="color: ${themeColor}; font-size: 20px; font-family: Open Sans; font-weight: 700; line-height: 20.48px;">
+                        Stay Option ${hotels[0].starRating} Star
+                    </h1>
+                    <p class="hotels-briefing" style="color: #7F7F7F; font-size: 16px; font-family: Open Sans; font-weight: 400; line-height: 15.36px; margin-top: 20px;">
+                        ${hotels.map(h => h.name).join(' + ')}
+                    </p>
+                </div>
+                <img style="margin-right: 40px;" width="150px" height="150px" src="${hotelimage}" alt="">
+            </section>
 
-        <section class="hotels-costing" style="padding-block: 20px; background: ${themeColor}; color: white; display: flex; justify-content: space-around; align-items: center; font-family: Arial, sans-serif;">
-            <div style="text-align: center;">
-                <span style="font-size: 18px; font-weight: bold;">Book now @</span><br>
-            </div>
-            <div style="text-align: left; border-right: 1px solid white; padding-right: 50px;">
-                <span style="font-size: 18px; font-weight: bold;">Single</span><br>
-                <span style="font-size: 24px; font-weight: bold;">${parseInt(packagerates.singdclienT_PRICE)}</span> <span style="font-size: 14px;">/per person</span>
-            </div>
-            <div style="text-align: left;">
-                <span style="font-size: 18px; font-weight: bold;">Double</span><br>
-                <span style="font-size: 24px; font-weight: bold;">${parseInt(packagerates.dbldclienT_PRICE)}</span> <span style="font-size: 14px;">/per person</span>
-            </div>
-            <div style="text-align: center;">
-                <span style="font-size: 18px; font-weight: bold;">Room Type:</span><br>
-                <span style="font-size: 14px;">Standard Room</span>
-            </div>
-        </section>
+            <section class="hotels-costing" style="padding-block: 20px; background: ${themeColor}; color: white; display: flex; justify-content: space-around; align-items: center; font-family: Arial, sans-serif;">
+                <div style="text-align: center;">
+                    <span style="font-size: 18px; font-weight: bold;">Book now @</span><br>
+                </div>
+                <div style="text-align: left; border-right: 1px solid white; padding-right: 50px;">
+                    <span style="font-size: 18px; font-weight: bold;">Single</span><br>
+                    <span style="font-size: 24px; font-weight: bold;">${singleprice}</span> <span style="font-size: 14px;">/per person</span>
+                </div>
+                <div style="text-align: left;">
+                    <span style="font-size: 18px; font-weight: bold;">Double</span><br>
+                    <span style="font-size: 24px; font-weight: bold;">${doubleprice}</span> <span style="font-size: 14px;">/per person</span>
+                </div>
+                <div style="text-align: center;">
+                    <span style="font-size: 18px; font-weight: bold;">Room Type:</span><br>
+                    <span style="font-size: 14px;">Standard Room</span>
+                </div>
+            </section>
 
-        ${hotelListHTML}
-    </div>`;
+            ${hotelListHTML}
+        </div>
+    `;
 }
 
 // Generate HTML for 5-star hotels
 const fiveStarPages = chunkArray(fiveStarHotels, 3);
 document.getElementById('dynamic-hotel-list-5stars').innerHTML = 
-    fiveStarPages.map(pageHotels => generateHotelsSection(pageHotels, false)).join('');
+fiveStarPages.map(pageHotels => generateHotelsSection(pageHotels, false)).join('');
 
 // Generate HTML for 4-star hotels
 const fourStarPages = chunkArray(fourStarHotels, 3);
 document.getElementById('dynamic-hotel-list-4stars').innerHTML = 
-    fourStarPages.map(pageHotels => generateHotelsSection(pageHotels, true)).join('');
+fourStarPages.map(pageHotels => generateHotelsSection(pageHotels, true)).join('');
+
 </script>
 
 </html>

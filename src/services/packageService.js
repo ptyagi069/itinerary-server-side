@@ -65,13 +65,13 @@ async function getHotelInfo(pkgid) {
             try {
                 // const hotelList = JSON.parse(pkg.HotelList || '[]');
                 data.forEach(hotel => {
-                    const nights = hotel.PKG ? hotel.PKG[0]?.NIGHTS : '';
+                    
                     hotelDetails.push({
                         name: hotel.HTL_NAME || '',
                         starRating: hotel.HTL_STAR || '',
                         cityName: hotel.HTL_CITY_NAME || '',
                         imagePath: hotel.IMAGE_PATH || '',
-                        nights: nights || '',
+                        nights: hotel.HTL_NIGHTS  || '',
                         hotelhighlights : hotel.Hotelhighlights || ''
                     });
                 });
