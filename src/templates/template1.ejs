@@ -568,7 +568,7 @@
                    
                 </div>
 
-                <div class="white-card">
+                <div id="white-card1" class="white-card">
                     <div class="inner-white-card">
 
                         <div class="leftie">
@@ -852,7 +852,8 @@
             </table>
     
             <!-- Rates Table -->
-            <h2 style="color: #000000; font-size: 20px; margin-top: 20px;">Rates</h2>
+            <section id="rate-table1" >
+                <h2 style="color: #000000; font-size: 20px; margin-top: 20px;">Rates</h2>
             <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
                 <thead>
                     <tr>
@@ -871,6 +872,7 @@
                     </tr>
                 </tbody>
             </table>
+            </section>
         </section>
     </div>
 
@@ -946,6 +948,8 @@ function parseHtmlList(htmlString) {
 
 const temp = document.getElementById('data-fromejscontroller').innerHTML;
 const pkgdate = "<%= data.pkgdate %>" 
+const isaddon = <%- JSON.stringify(data.isaddonwcost) %>;
+console.log(isaddon);
 const packageinformation = <%- JSON.stringify(data.packageInfo) %>;
 const itinerary =  <%- JSON.stringify(data.itinerary) %> ; 
 const incexc = <%- JSON.stringify(data.inclusionsExclusions) %> ;
@@ -957,7 +961,10 @@ const qrcodedata = <%- JSON.stringify( data.qr) %> ;
 const fiveStarHotels = hotels.filter(hotel => hotel.starRating === "5");
 const fourStarHotels = hotels.filter(hotel => hotel.starRating === "4");
 const qrImageElement = document.getElementById('qr-code-image');
-
+const ratetable = document.getElementById('rate-table1');
+if(qrcodedata.message == null){
+    qrImageElement.style.display = 'none';
+}
 qrImageElement.src = qrcodedata.message;
 
 function chunkArray(array, size) {
@@ -1083,6 +1090,11 @@ document.getElementById('first-page').style = `width: 210mm;
           background-repeat : no-repeat;
        `;
        const singleprice = `$` +`${parseInt(packagerates['singdclienT_PRICE'])}`;
+
+       if(parseInt(packagerates['singdclienT_PRICE']) == -1 && parseInt(packagerates['dbldclienT_PRICE']) == -1){
+            ratetable.style.display = 'none';
+            document.getElementById('white-card1').style.display = 'none';
+       }
        const doubleprice = `$` +`${parseInt(packagerates['dbldclienT_PRICE'])}`;
        document.getElementById('dbltblprice').innerHTML = doubleprice;
        document.getElementById('sgltblprice').innerHTML = singleprice;
@@ -1358,24 +1370,23 @@ function createAddonPage(dayData) {
 
     const page = document.createElement('div');
     page.className = 'addon-page a4-page';
-
+    
     let addonCardsHTML = '';
     addons.forEach(addon => {
         addonCardsHTML += `
-         
             <div class="activity-card">
                 <section class="activity-card-photo"
                     style="position: relative; height: 80px; background-image: url('${addon.ImagePath}'); border-radius: 10px; overflow:hidden; background-size: cover; background-position: center; background-repeat: no-repeat;">
                     <span
-                        style="    position: absolute;
-    background-color: #005BFF;
-    color: white;
-    padding-inline: 10px;
-    padding-block: 6px;
-    bottom: 0;
-    left: 0;
-    font-size: 10px;
-">
+                        style="position: absolute;
+                            background-color: #005BFF;
+                            color: white;
+                            padding-inline: 10px;
+                            padding-block: 6px;
+                            bottom: 0;
+                            left: 0;
+                            font-size: 10px;
+                            display: ${isaddon === 'true' ? 'block' : 'none'}">
                         $ ${addon.GuestAmount || 'N/A'}
                     </span>
                 </section>
@@ -1384,8 +1395,6 @@ function createAddonPage(dayData) {
                     style="font-size:10px;  padding-bottom: 5px; padding-top: 5px; font-weight: 450;">
                     ${addon.SERVICE_NAME || 'N/A'}
                 </h3>
-
-               
             </div>
         `;
     });
@@ -1410,7 +1419,6 @@ function createAddonPage(dayData) {
 
     return page;
 }
-
 function displayItinerary(itineraryData) {
     const container = document.getElementById('dynamic-itinerary');
 
@@ -1424,15 +1432,14 @@ function displayItinerary(itineraryData) {
     });
 }
 
-
 displayItinerary(itinerary);
-
 
 function generateHotelsSection(hotels, isRedTheme = false) {
     const themeColor = isRedTheme ? '#BA6672' : '#005BFF';
     const hotelimage = isRedTheme ? '/red-hotel-p.png' : '/OBJECTS.png';
     const theme2color = isRedTheme ? 'rgb(240 202 208 / 47%)' : '';
-
+    const showPricingSection = parseInt(packagerates['singdclienT_PRICE']) == -1 && parseInt(packagerates['dbldclienT_PRICE']) == -1;
+    
     const hotelListHTML = hotels.map(hotel => {
         const hotelHighlights = JSON.parse(hotel.hotelhighlights);
         const limitedHighlights = hotelHighlights.slice(0, 5);
@@ -1499,35 +1506,34 @@ function generateHotelsSection(hotels, isRedTheme = false) {
                 <img style="margin-right: 40px;" width="150px" height="150px" src="${hotelimage}" alt="">
             </section>
 
-            <section class="hotels-costing" style="padding-block: 20px; background: ${themeColor}; color: white; display: flex; justify-content: space-around; align-items: center; font-family: Arial, sans-serif;">
-                <div style="text-align: center;">
-                    <span style="font-size: 18px; font-weight: bold;">Book now @</span><br>
-                </div>
-                <div style="text-align: left; border-right: 1px solid white; padding-right: 50px;">
-                    <span style="font-size: 18px; font-weight: bold;">Single</span><br>
-                    <span style="font-size: 24px; font-weight: bold;">${singleprice}</span> <span style="font-size: 14px;">/per person</span>
-                </div>
-                <div style="text-align: left;">
-                    <span style="font-size: 18px; font-weight: bold;">Double</span><br>
-                    <span style="font-size: 24px; font-weight: bold;">${doubleprice}</span> <span style="font-size: 14px;">/per person</span>
-                </div>
-                <div style="text-align: center;">
-                    <span style="font-size: 18px; font-weight: bold;">Room Type:</span><br>
-                    <span style="font-size: 14px;">Standard Room</span>
-                </div>
-            </section>
+            ${showPricingSection ? `<span> </span>` : `
+                <section id="htl-csting" class="hotels-costing" style="padding-block: 20px; background: ${themeColor}; color: white; display: flex; justify-content: space-around; align-items: center; font-family: Arial, sans-serif;">
+                    <div style="text-align: center;">
+                        <span style="font-size: 18px; font-weight: bold;">Book now @</span><br>
+                    </div>
+                    <div style="text-align: left; border-right: 1px solid white; padding-right: 50px;">
+                        <span style="font-size: 18px; font-weight: bold;">Single</span><br>
+                        <span style="font-size: 24px; font-weight: bold;">${singleprice}</span> <span style="font-size: 14px;">/per person</span>
+                    </div>
+                    <div style="text-align: left;">
+                        <span style="font-size: 18px; font-weight: bold;">Double</span><br>
+                        <span style="font-size: 24px; font-weight: bold;">${doubleprice}</span> <span style="font-size: 14px;">/per person</span>
+                    </div>
+                    <div style="text-align: center;">
+                        <span style="font-size: 18px; font-weight: bold;">Room Type:</span><br>
+                        <span style="font-size: 14px;">Standard Room</span>
+                    </div>
+                </section>`}
 
             ${hotelListHTML}
         </div>
     `;
 }
 
-// Generate HTML for 5-star hotels
 const fiveStarPages = chunkArray(fiveStarHotels, 3);
 document.getElementById('dynamic-hotel-list-5stars').innerHTML = 
 fiveStarPages.map(pageHotels => generateHotelsSection(pageHotels, false)).join('');
 
-// Generate HTML for 4-star hotels
 const fourStarPages = chunkArray(fourStarHotels, 3);
 document.getElementById('dynamic-hotel-list-4stars').innerHTML = 
 fourStarPages.map(pageHotels => generateHotelsSection(pageHotels, true)).join('');

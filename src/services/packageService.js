@@ -103,7 +103,7 @@ async function getpkginclusionexclusions(pkgid) {
     }
 }
 
-async function generateQr(agentId, emailId, packageId, tourDate, amount, depositAmount, ipAddress) {
+async function generateQr(agentId, emailId, packageId, tourDate, amount, depositAmount, ipAddress, addonswcost, isdate) {
     const url = `${config.apiUrl}/Account/GenrateQr`;
     const params = new URLSearchParams({
         agentid: agentId,
@@ -114,7 +114,16 @@ async function generateQr(agentId, emailId, packageId, tourDate, amount, deposit
         DepositAmount: depositAmount,
         ipaddress: ipAddress
     });
-    
+
+    const isDateEnabled = typeof isdate === 'string' ? isdate === 'true' : !!isdate;
+
+    if (!isDateEnabled) {
+        return {
+            success: 'false',
+            message: null
+        };
+    }
+
     try {
         const temp = await fetch(`${url}?${params.toString()}`, {
             method: 'POST',
@@ -124,6 +133,7 @@ async function generateQr(agentId, emailId, packageId, tourDate, amount, deposit
             body: ''
         });
         const response = await temp.json();
+        
         return {
             success: response.success,
             message: response.message,
@@ -133,7 +143,6 @@ async function generateQr(agentId, emailId, packageId, tourDate, amount, deposit
         throw new Error(`Failed to generate QR: ${error.message}`);
     }
 }
-
 async function getpkgitineray(pkgid, userid) {
     const a = `${config.apiurl2}itinerary`;
     try {
@@ -181,34 +190,48 @@ async function getagencyprofiledetails(userid) {
     }
 }
 
-async function getpkgrates(pkgid , userid , tourdate){
+async function getpkgrates(pkgid, userid, tourdate,  addonswcost , isdate) {
     try {
         const apiurl = `${config.apiUrl}/Holidays/PacKageRate?PKG_ID=${pkgid}&AgentID=${userid}&tourdate=${tourdate}`;
         const response = await fetch(apiurl);
         const data = await response.json();
-        return {
-            dbldclienT_PRICE : data[0]['dbldclienT_PRICE'],
-            singdclienT_PRICE : data[0]['singdclienT_PRICE'],
-            ratE_AVIAL_DATE_R : data[0]['ratE_AVIAL_DATE_R'],
+
+        // Convert string to boolean
+        const isDateEnabled = isdate == 'true';
+        console.log(isDateEnabled);
+
+        if (isDateEnabled) {
+            return {
+                dbldclienT_PRICE: data[0]['dbldclienT_PRICE'],
+                singdclienT_PRICE: data[0]['singdclienT_PRICE'],
+                ratE_AVIAL_DATE_R: data[0]['ratE_AVIAL_DATE_R'],
+            }
+        } else {
+            return {
+                dbldclienT_PRICE: -1,
+                singdclienT_PRICE: -1,
+                ratE_AVIAL_DATE_R: null,
+            }
         }
-       
     } catch (error) {
         throw new Error(`Failed to fetch package data: ${error.message}`);
     }
 }
 
 class PackageService {    
-    async getPackageData(pkgid, userid , tourdate) {
+    async getPackageData(pkgid, userid , tourdate ,addonswcost, isdate) {
         try {
             const result = {};
+            result.isdate = isdate;
+            result.isaddonwcost = addonswcost;
             result.pkgdate = tourdate;
             result.packageInfo = await getpkgInfo(pkgid);
             result.agencyProfile = await getagencyprofiledetails(userid);
             result.inclusionsExclusions = await getpkginclusionexclusions(pkgid);
             result.hoteldetails = await getHotelInfo(pkgid);
             result.itinerary = await getpkgitineray(pkgid, userid);
-            result.packagerates = await getpkgrates(pkgid , userid , tourdate);
-            result.qr = await generateQr(userid, result.agencyProfile.emailId, pkgid, tourdate, result.packageInfo.depositamount, result.packageInfo.depositamount, '1.1.1.1');
+            result.packagerates = await getpkgrates(pkgid , userid , tourdate ,  addonswcost , isdate);
+            result.qr = await generateQr(userid, result.agencyProfile.emailId, pkgid, tourdate, result.packageInfo.depositamount, result.packageInfo.depositamount, '1.1.1.1', addonswcost, isdate);
            return result;
         } catch (error) {
             throw new Error(`Failed to fetch complete package data: ${error.message}`);
