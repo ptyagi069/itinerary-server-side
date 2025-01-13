@@ -1,19 +1,22 @@
 const config = require('../config/config');
+const { getItineraryDetails } = require("../../controller-itinerary-detail/itineraryController");
 
 async function getpkgInfo(pkgid) {
     try {
-        const apiurl = `${config.apiurl2}pkgdetail`;
-        const response = await fetch(apiurl, {
-            method: 'POST',
-            headers: {
-                'Accept': '*/*',
-                'Content-Type': 'application/json' 
-            },
-            body: JSON.stringify({
-                pkgid: pkgid
-            })
-        });
-        const data = await response.json();
+        // const apiurl = `${config.apiurl2}pkgdetail`;
+        // const response = await fetch(apiurl, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Accept': '*/*',
+        //         'Content-Type': 'application/json' 
+        //     },
+        //     body: JSON.stringify({
+        //         pkgid: pkgid
+        //     })
+        // });
+        // const data = await response.json();
+
+        const data  = await getItineraryDetails({pkgid}, "pkgdetail");
       
         return {
             packageName: data[0]['PKG_TITLE'],
@@ -36,19 +39,21 @@ async function getpkgInfo(pkgid) {
 
 async function getHotelInfo(pkgid) {
     try {
-        const apiurl = `${config.apiurl2}pkgdetail`;
-        const response = await fetch(apiurl, {
-            method: 'POST',
-            headers: {
-                'Accept': '*/*',
-                'Content-Type': 'application/json' 
-            },
-            body: JSON.stringify({
-                pkgid: pkgid
-            })
-        });
+        // const apiurl = `${config.apiurl2}pkgdetail`;
+        // const response = await fetch(apiurl, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Accept': '*/*',
+        //         'Content-Type': 'application/json' 
+        //     },
+        //     body: JSON.stringify({
+        //         pkgid: pkgid
+        //     })
+        // });
         
-        const data = await response.json();
+        // const data = await response.json();
+
+        const data  = await getItineraryDetails({pkgid},"hotel");
         if (!Array.isArray(data) || data.length === 0) {
             console.error('Invalid or empty data received from API');
             return [];
@@ -56,13 +61,11 @@ async function getHotelInfo(pkgid) {
 
         const hotelDetails = [];
         
-        data.forEach(pkg => {
+        // data.forEach(pkg => {
             try {
-                const hotelList = JSON.parse(pkg.HotelList || '[]');
-                
-                hotelList.forEach(hotel => {
+                // const hotelList = JSON.parse(pkg.HotelList || '[]');
+                data.forEach(hotel => {
                     const nights = hotel.PKG ? hotel.PKG[0]?.NIGHTS : '';
-                    
                     hotelDetails.push({
                         name: hotel.HTL_NAME || '',
                         starRating: hotel.HTL_STAR || '',
@@ -75,7 +78,7 @@ async function getHotelInfo(pkgid) {
             } catch (e) {
                 console.error('Error processing hotel list:', e);
             }
-        });
+        // });
 
         return hotelDetails;
         
@@ -134,19 +137,20 @@ async function generateQr(agentId, emailId, packageId, tourDate, amount, deposit
 async function getpkgitineray(pkgid, userid) {
     const a = `${config.apiurl2}itinerary`;
     try {
-        const temp = await fetch(`${a}`, {
-            method: 'POST',
-            headers: {
-                'Accept': '*/*',
-                'Content-Type': 'application/json' 
-            },
-            body: JSON.stringify({
-                pkgid: pkgid,
-                userid: userid
-            })
-        });
+        // const temp = await fetch(`${a}`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Accept': '*/*',
+        //         'Content-Type': 'application/json' 
+        //     },
+        //     body: JSON.stringify({
+        //         pkgid,
+        //         userid
+        //     })
+        // });
 
-        const result = await temp.json();
+        // const result = await temp.json();
+        const result  = await getItineraryDetails({pkgid, userid}, "itinerary");
         return result.map((day) => ({
             day: day['PKG_ITI_DAY'],
             title: day['PKG_ITI_TITLE'],
