@@ -583,7 +583,7 @@
 
                         <div class="rightie">
                             <p class="trave-text">Travel on</p>
-                            <p class="travel-date" id="tour-date"> 5th May' 2024</p>
+                            <p class="travel-date" id="tour-date"> </p>
                         </div>
 
 
@@ -636,7 +636,7 @@
 
         <section class="hero-section">
 
-            <div class="overlay" style="position: relative; color: white; left: 80%; top: 10%;">
+            <div id="overlay-dates" class="overlay" style="position: relative; color: white; left: 80%; top: 10%;">
                 <div  class="start-dates boxi"
                     style="display: flex; justify-content: flex-end; align-items: center; padding: 20px;">
                         <p id="start-dates">
@@ -690,7 +690,7 @@
                     <div class="secondboy">
                         <h1 id="citycount"></h1>
                         <br>
-                        <span id="cities">Bali, Kuta, Ubud</span>
+                        <span style="font-size: 10px;" id="cities">Bali, Kuta, Ubud</span>
                     </div>
 
                     <div class="thirdboy">
@@ -738,8 +738,8 @@
 
 
         <section
-            style="display: flex; justify-content: space-between; align-items: flex-start; padding: 30px; gap: 60px;">
-            <div style="width: 50%;">
+            style="display: flex; justify-content: space-between; align-items: flex-start; padding-inline: 30px; gap: 60px;">
+            <!-- <div style="width: 50%;">
                 <h1 class="whyperfect">
                     Why is this trip perfect for you
                 </h1>
@@ -752,7 +752,7 @@
                     Savor diverse cuisine, vibrant nightlife, and scenic tours
                     Enjoy UNESCO World Heritage sites and famous landmarks
                 </div>
-            </div>
+            </div> -->
 
             <div style="width: 50%;">
                 <h1 class="youenjoy">
@@ -865,7 +865,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td style="border: 1px solid #ddd; padding: 10px;">Mar 27, 2025</td>
+                        <td style="border: 1px solid #ddd; padding: 10px;" id="tttt"></td>
                         <td style="border: 1px solid #ddd; padding: 10px;">Standard Room</td>
                         <td style="border: 1px solid #ddd; padding: 10px; text-align: center;" id="dbltblprice"></td>
                         <td style="border: 1px solid #ddd; padding: 10px; text-align: center;" id="sgltblprice"></td>
@@ -877,7 +877,7 @@
     </div>
 
 
-    <div class="a4-page" style="overflow: hidden;">
+    <div  id="qr-page" class="a4-page" style="overflow: hidden;">
         <section class="header-part">
           
         </section>
@@ -948,8 +948,10 @@ function parseHtmlList(htmlString) {
 
 const temp = document.getElementById('data-fromejscontroller').innerHTML;
 const pkgdate = "<%= data.pkgdate %>" 
+console.log(pkgdate);
+
+
 const isaddon = <%- JSON.stringify(data.isaddonwcost) %>;
-console.log(isaddon);
 const packageinformation = <%- JSON.stringify(data.packageInfo) %>;
 const itinerary =  <%- JSON.stringify(data.itinerary) %> ; 
 const incexc = <%- JSON.stringify(data.inclusionsExclusions) %> ;
@@ -965,7 +967,10 @@ const ratetable = document.getElementById('rate-table1');
 if(qrcodedata.message == null){
     qrImageElement.style.display = 'none';
 }
-qrImageElement.src = qrcodedata.message;
+else{
+    qrImageElement.src = qrcodedata.message;
+}
+
 
 function chunkArray(array, size) {
     const chunked = [];
@@ -980,6 +985,7 @@ const pkgtotaldays = packageinformation.pkg_noofdays;
 const dateString = pkgdate;
 const date  = new Date(dateString.split('/').reverse().join('-'));
 const formattedDate = `${date.getDate()}th ${date.toLocaleDateString('en-US', { month: 'short' })} ${date.getFullYear()}`;
+document.getElementById('tttt').textContent = formattedDate;
 const newDate = new Date(date);
 newDate.setDate(newDate.getDate() + pkgtotaldays);
 const formattedEndDate = `${newDate.getDate()}th ${newDate.toLocaleDateString('en-US', { month: 'short' })} ${newDate.getFullYear()}`;
@@ -1090,12 +1096,16 @@ document.getElementById('first-page').style = `width: 210mm;
           background-repeat : no-repeat;
        `;
        const singleprice = `$` +`${parseInt(packagerates['singdclienT_PRICE'])}`;
-
-       if(parseInt(packagerates['singdclienT_PRICE']) == -1 && parseInt(packagerates['dbldclienT_PRICE']) == -1){
+       const doubleprice = `$` +`${parseInt(packagerates['dbldclienT_PRICE'])}`;
+       console.log(singleprice);
+        console.log(doubleprice);
+        console.log(date);
+        if(pkgdate == '' || pkgdate == '-1/-1/-1' || pkgdate == null ){
             ratetable.style.display = 'none';
             document.getElementById('white-card1').style.display = 'none';
-       }
-       const doubleprice = `$` +`${parseInt(packagerates['dbldclienT_PRICE'])}`;
+            document.getElementById('overlay-dates').style.display ='none'; 
+            document.getElementById('qr-page').style.display ='none'; 
+        }
        document.getElementById('dbltblprice').innerHTML = doubleprice;
        document.getElementById('sgltblprice').innerHTML = singleprice;
 document.getElementById('pkgdsc').textContent = packageinformation.description;
@@ -1171,7 +1181,7 @@ function renderDaySchedule(scheduleData) {
     container.style.cssText = `    display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(3, auto);
-    gap: 10px 15px;
+    gap: 3px 15px;
     width: 180mm;`;
 
     // Function to parse duration and get day numbers
@@ -1438,7 +1448,7 @@ function generateHotelsSection(hotels, isRedTheme = false) {
     const themeColor = isRedTheme ? '#BA6672' : '#005BFF';
     const hotelimage = isRedTheme ? '/red-hotel-p.png' : '/OBJECTS.png';
     const theme2color = isRedTheme ? 'rgb(240 202 208 / 47%)' : '';
-    const showPricingSection = parseInt(packagerates['singdclienT_PRICE']) == -1 && parseInt(packagerates['dbldclienT_PRICE']) == -1;
+    const showPricingSection = pkgdate == '' || pkgdate == '-1/-1/-1' || pkgdate == null;
     
     const hotelListHTML = hotels.map(hotel => {
         const hotelHighlights = JSON.parse(hotel.hotelhighlights);

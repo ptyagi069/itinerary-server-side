@@ -103,7 +103,7 @@ async function getpkginclusionexclusions(pkgid) {
     }
 }
 
-async function generateQr(agentId, emailId, packageId, tourDate, amount, depositAmount, ipAddress, addonswcost, isdate) {
+async function generateQr(agentId, emailId, packageId, tourDate, amount, depositAmount, ipAddress) {
     const url = `${config.apiUrl}/Account/GenrateQr`;
     const params = new URLSearchParams({
         agentid: agentId,
@@ -115,9 +115,7 @@ async function generateQr(agentId, emailId, packageId, tourDate, amount, deposit
         ipaddress: ipAddress
     });
 
-    const isDateEnabled = typeof isdate === 'string' ? isdate === 'true' : !!isdate;
-
-    if (!isDateEnabled) {
+    if (tourDate === null || tourDate === '-1/-1/-1' || tourDate == '') {
         return {
             success: 'false',
             message: null
@@ -190,17 +188,13 @@ async function getagencyprofiledetails(userid) {
     }
 }
 
-async function getpkgrates(pkgid, userid, tourdate,  addonswcost , isdate) {
+async function getpkgrates(pkgid, userid, tourdate) {
     try {
         const apiurl = `${config.apiUrl}/Holidays/PacKageRate?PKG_ID=${pkgid}&AgentID=${userid}&tourdate=${tourdate}`;
         const response = await fetch(apiurl);
         const data = await response.json();
 
-        // Convert string to boolean
-        const isDateEnabled = isdate == 'true';
-        console.log(isDateEnabled);
-
-        if (isDateEnabled) {
+        if (tourdate != null || tourdate != '-1/-1/-1' || tourdate != '') {
             return {
                 dbldclienT_PRICE: data[0]['dbldclienT_PRICE'],
                 singdclienT_PRICE: data[0]['singdclienT_PRICE'],
@@ -230,8 +224,8 @@ class PackageService {
             result.inclusionsExclusions = await getpkginclusionexclusions(pkgid);
             result.hoteldetails = await getHotelInfo(pkgid);
             result.itinerary = await getpkgitineray(pkgid, userid);
-            result.packagerates = await getpkgrates(pkgid , userid , tourdate ,  addonswcost , isdate);
-            result.qr = await generateQr(userid, result.agencyProfile.emailId, pkgid, tourdate, result.packageInfo.depositamount, result.packageInfo.depositamount, '1.1.1.1', addonswcost, isdate);
+            result.packagerates = await getpkgrates(pkgid , userid , tourdate);
+            result.qr = await generateQr(userid, result.agencyProfile.emailId, pkgid, tourdate, result.packageInfo.depositamount, result.packageInfo.depositamount, '1.1.1.1');
            return result;
         } catch (error) {
             throw new Error(`Failed to fetch complete package data: ${error.message}`);
