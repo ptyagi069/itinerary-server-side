@@ -1,4 +1,4 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require("puppeteer-core");
 const ejs = require('ejs');
 const path = require('path');
 
@@ -12,7 +12,10 @@ class PDFService {
             const html = await ejs.renderFile(templatePath, {
                 data: packageData,
             });
-            const browser = await puppeteer.launch();
+            const browser = await puppeteer.launch({
+                executablePath : path.join('C:', 'Program Files', 'Google', 'Chrome', 'Application', "chrome.exe")
+
+            });
             const page = await browser.newPage();
             page.setDefaultNavigationTimeout(60000);
             page.setDefaultTimeout(60000);
