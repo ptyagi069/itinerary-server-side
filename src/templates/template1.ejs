@@ -1333,9 +1333,7 @@ function createItineraryPage(dayData) {
     const details = safeJSONParse(dayData.details);
     const detailsData = details ? details[0] : {};
     
-    // Clean the description HTML
     const cleanedDescription = cleanHTML(dayData.description);
-    
     const page = document.createElement('div');
     page.className = 'itinerary-page a4-page';
     page.style.cssText = 'width: 210mm; height:297mm; page-break-after: always;';
@@ -1367,7 +1365,7 @@ function createItineraryPage(dayData) {
         </section>
 
         <section class="description" style="padding-inline: 30px; padding-block:10px; font-size: 12px !important; color: black !important; background-color: #11111100;">
-            ${cleanedDescription}
+          ${cleanedDescription.replaceAll('#', "")}
         </section>
     `;
 
