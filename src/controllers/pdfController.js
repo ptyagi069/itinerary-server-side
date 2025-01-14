@@ -21,8 +21,8 @@ class PDFController {
     async downloadPDF(req, res) {
         try {
             const { pkgid } = req.params;
-            const { userid, date, } = req.query;
-            const packageData = await packageService.getPackageData(pkgid, userid, date);
+            const { userid, date ,addonswcost, isdate } = req.query; 
+            const packageData = await packageService.getPackageData(pkgid, userid, date , addonswcost, isdate);
             const pdf = await pdfService.generatePDF(packageData, pkgid);
             const packagename = packageData.packageInfo.packageName;
             res.set({
